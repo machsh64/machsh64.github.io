@@ -1267,7 +1267,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #fff;
+  background: #ffd17e;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -2628,7 +2628,7 @@ body {
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover;
-  background-position: 50% 50%;
+  background-position: 65% 50%;
 }
 .hider_title {
   cursor: pointer;
