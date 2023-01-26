@@ -20,19 +20,20 @@
     var CONFIG = {"hostname":"machsh64.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="igotGodonmyside, who is the next">
-<meta property="og:type" content="website">
-<meta property="og:title" content="标签">
-<meta property="og:url" content="https://machsh64.github.io/tags/index.html">
+  <meta name="description" content="在前端开发中，页面中有许多重复的内容，以往可能使用的frame框架解决，但渲染与静态资源的使用又很麻烦，所以在thymeleaf使用模板抽取是更好的选择">
+<meta property="og:type" content="article">
+<meta property="og:title" content="thymeleafskills">
+<meta property="og:url" content="https://machsh64.github.io/2023/01/26/thymeleafskills/index.html">
 <meta property="og:site_name" content="Ren |life">
-<meta property="og:description" content="igotGodonmyside, who is the next">
+<meta property="og:description" content="在前端开发中，页面中有许多重复的内容，以往可能使用的frame框架解决，但渲染与静态资源的使用又很麻烦，所以在thymeleaf使用模板抽取是更好的选择">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-01-26T08:38:15.000Z">
-<meta property="article:modified_time" content="2023-01-26T08:42:54.602Z">
+<meta property="article:published_time" content="2023-01-26T13:29:37.000Z">
+<meta property="article:modified_time" content="2023-01-26T14:00:07.599Z">
 <meta property="article:author" content="Ren">
+<meta property="article:tag" content="thymeleaf">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://machsh64.github.io/tags/">
+<link rel="canonical" href="https://machsh64.github.io/2023/01/26/thymeleafskills/">
 
 
 <script id="page-configurations">
@@ -40,13 +41,12 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
 
-  <title>标签 | Ren |life
-</title>
+  <title>thymeleafskills | Ren |life</title>
   
 
 
@@ -165,51 +165,108 @@
       <div class="main-inner">
         <div class="content-wrap">
           
-  
-  
 
-          <div class="content page posts-expand">
+          <div class="content post posts-expand">
             
 
     
-    
-    
-    <div class="post-block" lang="zh-CN">
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://machsh64.github.io/2023/01/26/thymeleafskills/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/author.jpg">
+      <meta itemprop="name" content="Ren">
+      <meta itemprop="description" content="igotGodonmyside, who is the next">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ren |life">
+    </span>
       <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          thymeleafskills
+        </h1>
 
-<h1 class="post-title" itemprop="name headline">标签
-</h1>
+        <div class="post-meta">
 
-<div class="post-meta">
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2023-01-26 21:29:37 / 修改时间：22:00:07" itemprop="dateCreated datePublished" datetime="2023-01-26T21:29:37+08:00">2023-01-26</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/thymeleaf/" itemprop="url" rel="index"><span itemprop="name">thymeleaf</span></a>
+                </span>
+            </span>
+
+          
+            <div class="post-description">在前端开发中，页面中有许多重复的内容，以往可能使用的frame框架解决，但渲染与静态资源的使用又很麻烦，所以在thymeleaf使用模板抽取是更好的选择</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><strong>模板抽取</strong></p>
+<p><strong>当使用</strong> <strong>th:fragment</strong> <strong>时</strong></p>
+<p>公共模板中：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;footer th:fragment=<span class="string">&quot;copy&quot;</span>&gt;      </span><br><span class="line">    footer中的公共内容 </span><br><span class="line">&lt;/footer&gt;</span><br><span class="line">      </span><br><span class="line">&lt;footer id=<span class="string">&quot;copysection&quot;</span>&gt;   </span><br><span class="line">    footer中的公共内容 </span><br><span class="line">&lt;/footer&gt;  </span><br></pre></td></tr></table></figure>
+
+<p>使用公共模板的页面中：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;body&gt;</span><br><span class="line"></span><br><span class="line">. . .</span><br><span class="line"></span><br><span class="line">&lt;div th:insert=<span class="string">&quot;footer :: copy&quot;</span>&gt;&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">&lt;div th:replace=<span class="string">&quot;footer :: copy&quot;</span>&gt;&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">&lt;div th:include=<span class="string">&quot;footer :: copy&quot;</span>&gt;&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">&lt;div th:ins../rep../inc=<span class="string">&quot;footer :: #copysection&quot;</span>&gt;&lt;/div&gt;  &lt;!-- 此处要使用#进行选择 --&gt;</span><br><span class="line"></span><br><span class="line">&lt;/body&gt; </span><br></pre></td></tr></table></figure>
+
+<p>使用公共模板的页面的效果：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&lt;body&gt;</span><br><span class="line"></span><br><span class="line">. . .</span><br><span class="line"></span><br><span class="line">&lt;!-- th:insert=<span class="string">&quot;footer :: copy&quot;</span> --&gt;</span><br><span class="line">&lt;div&gt;</span><br><span class="line">   &lt;footer&gt; </span><br><span class="line">      footer中的公共内容</span><br><span class="line">   &lt;/footer&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- th:replace=<span class="string">&quot;footer :: copy&quot;</span> --&gt;</span><br><span class="line">&lt;footer&gt; </span><br><span class="line">  footer中的公共内容</span><br><span class="line">&lt;/footer&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- th:include=<span class="string">&quot;footer :: copy&quot;</span> --&gt;</span><br><span class="line">&lt;div&gt;</span><br><span class="line">  footer中的公共内容</span><br><span class="line">&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">&lt;/body&gt; </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>  <strong>🔍</strong>  <strong>th:insert</strong> <strong>相当于将公共模板连带公共标签插入新标签中，此过程保留新标签</strong>  </p>
+<p>  <strong>🔍</strong>  <strong>th:replace</strong> <strong>相当于用公共模板连带标签替换新标签，不保留新标签</strong>  </p>
+<p>  <strong>🔍</strong>  <strong>th:include</strong> <strong>相当于将公共模板标签中的内容插入新标签，不保留旧标签</strong></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/thymeleaf/" rel="tag"># thymeleaf</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/01/25/first-blog/" rel="prev" title="送东阳马生序">
+      <i class="fa fa-chevron-left"></i> 送东阳马生序
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
   
 
-</div>
-
-</header>
-
-      
-      
-      
-      <div class="post-body">
-          <div class="tag-cloud">
-            <div class="tag-cloud-title">
-              目前共计 2 个标签
-            </div>
-            <div class="tag-cloud-tags">
-              <a href="/tags/poem/" style="font-size: 12px; color: #ccc">poem</a> <a href="/tags/thymeleaf/" style="font-size: 12px; color: #ccc">thymeleaf</a>
-            </div>
-          </div>
-        
-      </div>
-      
-      
-      
-    </div>
-    
-
-    
-    
-    
 
 
           </div>
