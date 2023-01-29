@@ -36,7 +36,8 @@
     }
 
     async loadModel(t, s, n) {
-      let m = parseInt(t) % 2 === 1 ? 3 : 4;  //将随机model转为只传22，33
+      let m = (Math.floor(Math.random()*2) + 3)  //将随机model转为只传22，33
+      s = m === 3 ? 117:26;
       m = m.toString();
       if (localStorage.setItem("modelId", m), localStorage.setItem("modelTexturesId", s), o(n, 4e3, 10), this.useCDN) {
         this.modelList || await this.loadModelList();
@@ -58,14 +59,13 @@
 
     async loadOtherModel() {
       let e = localStorage.getItem("modelId");
+      let c = (Math.floor(Math.random()*2) + 3) === 3 ? 117:26;
       if (this.useCDN) {
         this.modelList || await this.loadModelList();
         const t = ++e >= this.modelList.models.length ? 0 : e;
-        let m = parseInt(t) % 2 === 1 ? 3 : 4;
-        let c = m===3 ? 117:26;
         this.loadModel(t, c, this.modelList.messages[t])
       } else fetch(`${this.apiPath}switch/?id=${e}`).then((e => e.json())).then((e => {
-        this.loadModel(e.model.id, 0, e.model.message)
+        this.loadModel(e.model.id, c, e.model.message)
       }))
     }
   }
