@@ -1,187 +1,477 @@
-/*!
- * Live2D Widget
- * https://github.com/stevenjoezhang/live2d-widget
- */
-!function () {
-  "use strict";
+window.live2d_settings = Array(); 
 
-  function e(e) {
-    return Array.isArray(e) ? e[Math.floor(Math.random() * e.length)] : e
-  }
+// 静态 API 文件
+live2d_settings['staticAPIFile']        = '/static-api-file.json';
+live2d_settings['staticPath']           = '/model'
+live2d_settings['defaultModel']         = '{"version":"1.0.0","model":"MODEL_HOME/Potion-Maker/Pio/model.moc","textures":["MODEL_HOME/Potion-Maker/Pio/textures/default-costume.png"],"layout":{"center_x":0.0,"center_y":-0.05,"width":2.0},"hit_areas_custom":{"head_x":[-0.35,0.6],"head_y":[0.19,-0.2],"body_x":[-0.3,-0.25],"body_y":[0.3,-0.9]},"motions":{"idle":[{"file":"MODEL_HOME/Potion-Maker/Pio/motions/Breath1.mtn"},{"file":"MODEL_HOME/Potion-Maker/Pio/motions/Breath2.mtn"},{"file":"MODEL_HOME/Potion-Maker/Pio/motions/Breath3.mtn"},{"file":"MODEL_HOME/Potion-Maker/Pio/motions/Breath5.mtn"},{"file":"MODEL_HOME/Potion-Maker/Pio/motions/Breath7.mtn"},{"file":"MODEL_HOME/Potion-Maker/Pio/motions/Breath8.mtn"}],"sleepy":[{"file":"MODEL_HOME/Potion-Maker/Pio/motions/Sleeping.mtn"}],"flick_head":[{"file":"MODEL_HOME/Potion-Maker/Pio/motions/Touch Dere1.mtn"},{"file":"MODEL_HOME/Potion-Maker/Pio/motions/Touch Dere2.mtn"},{"file":"MODEL_HOME/Potion-Maker/Pio/motions/Touch Dere3.mtn"},{"file":"MODEL_HOME/Potion-Maker/Pio/motions/Touch Dere4.mtn"},{"file":"MODEL_HOME/Potion-Maker/Pio/motions/Touch Dere5.mtn"},{"file":"MODEL_HOME/Potion-Maker/Pio/motions/Touch Dere6.mtn"}],"tap_body":[{"file":"MODEL_HOME/Potion-Maker/Pio/motions/Sukebei1.mtn"},{"file":"MODEL_HOME/Potion-Maker/Pio/motions/Sukebei2.mtn"},{"file":"MODEL_HOME/Potion-Maker/Pio/motions/Sukebei3.mtn"},{"file":"MODEL_HOME/Potion-Maker/Pio/motions/Touch1.mtn"},{"file":"MODEL_HOME/Potion-Maker/Pio/motions/Touch2.mtn"},{"file":"MODEL_HOME/Potion-Maker/Pio/motions/Touch3.mtn"},{"file":"MODEL_HOME/Potion-Maker/Pio/motions/Touch4.mtn"},{"file":"MODEL_HOME/Potion-Maker/Pio/motions/Touch5.mtn"},{"file":"MODEL_HOME/Potion-Maker/Pio/motions/Touch6.mtn"}]}}'.replace(/MODEL_HOME/g, live2d_settings['staticPath']);
 
-  let t;
+// 后端接口
+live2d_settings['modelAPI']             = '不需要啦（x';                 // 自建 API 修改这里
+live2d_settings['tipsMessage']          = 'waifu-tips.json';            // 同目录下可省略路径
+live2d_settings['hitokotoAPI']          = 'lwl12.com';                  // 一言 API，可选 'lwl12.com', 'hitokoto.cn', 'jinrishici.com'(古诗词)
 
-  function o(o, s, n) {
-    if (!o || sessionStorage.getItem("waifu-text") && sessionStorage.getItem("waifu-text") > n) return;
-    t && (clearTimeout(t), t = null), o = e(o), sessionStorage.setItem("waifu-text", n);
-    const i = document.getElementById("waifu-tips");
-    i.innerHTML = o, i.classList.add("waifu-tips-active"), t = setTimeout((() => {
-      sessionStorage.removeItem("waifu-text"), i.classList.remove("waifu-tips-active")
-    }), s)
-  }
+// 默认模型
+live2d_settings['modelId']              = 0;            // 默认模型 ID，可在 F12 控制台找到
+live2d_settings['modelTexturesId']      = 53;           // 默认材质 ID，可在 F12 控制台找到
 
-  class s {
-    constructor(e) {
-      let {apiPath: t, cdnPath: o} = e, s = !1;
-      if ("string" == typeof o) s = !0, o.endsWith("/") || (o += "/"); else {
-        if ("string" != typeof t) throw"Invalid initWidget argument!";
-        t.endsWith("/") || (t += "/")
-      }
-      this.useCDN = s, this.apiPath = t, this.cdnPath = o
-    }
+// 工具栏设置
+live2d_settings['showToolMenu']         = true;         // 显示 工具栏          ，可选 true(真), false(假)
+live2d_settings['canCloseLive2d']       = false;         // 显示 关闭看板娘  按钮，可选 true(真), false(假)
+live2d_settings['canSwitchModel']       = true;         // 显示 模型切换    按钮，可选 true(真), false(假)
+live2d_settings['canSwitchTextures']    = true;         // 显示 材质切换    按钮，可选 true(真), false(假)
+live2d_settings['canSwitchHitokoto']    = true;         // 显示 一言切换    按钮，可选 true(真), false(假)
+live2d_settings['canTakeScreenshot']    = false;         // 显示 看板娘截图  按钮，可选 true(真), false(假)
+live2d_settings['canTurnToHomePage']    = false;         // 显示 返回首页    按钮，可选 true(真), false(假)
+live2d_settings['canTurnToAboutPage']   = false;         // 显示 跳转关于页  按钮，可选 true(真), false(假)
 
-    async loadModelList() {
-      const e = await fetch(`${this.cdnPath}model_list.json`);
-      this.modelList = await e.json()
-    }
+// 模型切换模式
+live2d_settings['modelStorage']         = true;         // 记录 ID (刷新后恢复)，可选 true(真), false(假)
+live2d_settings['modelRandMode']        = 'switch';     // 模型切换，可选 'rand'(随机), 'switch'(顺序)
+live2d_settings['modelTexturesRandMode']= 'switch';       // 材质切换，可选 'rand'(随机), 'switch'(顺序)
 
-    async loadModel(t, s, n) {
-      let m;
-      if (t!== 3||t!==4){
-        m = (Math.floor(Math.random()*2) + 3)  //将随机model转为只传22，33
-      }else {
-        m = t;
-      }
-      if(s === 0) {
-        s = m === 3 ? 117 : 26;
-      }
-      m = m.toString();
-      if (localStorage.setItem("modelId", m), localStorage.setItem("modelTexturesId", s), o(n, 4e3, 10), this.useCDN) {
-        this.modelList || await this.loadModelList();
-        const o = e(this.modelList.models[m]);
-        loadlive2d("live2d", `${this.cdnPath}model/${o}/index.json`)
-      } else loadlive2d("live2d", `${this.apiPath}get/?id=${m}-${s}`)
-    }
+// 提示消息选项
+live2d_settings['showHitokoto']         = true;         // 显示一言
+live2d_settings['showF12Status']        = true;         // 显示加载状态
+live2d_settings['showF12Message']       = false;        // 显示看板娘消息
+live2d_settings['showF12OpenMsg']       = true;         // 显示控制台打开提示
+live2d_settings['showCopyMessage']      = true;         // 显示 复制内容 提示
+live2d_settings['showWelcomeMessage']   = true;         // 显示进入面页欢迎词
 
-    async loadRandModel() {
-      const t = localStorage.getItem("modelId"), s = localStorage.getItem("modelTexturesId");
-      if (this.useCDN) {
-        this.modelList || await this.loadModelList();
-        const s = e(this.modelList.models[t]);
-        loadlive2d("live2d", `${this.cdnPath}model/${s}/index.json`), o("我的新衣服好看嘛？", 4e3, 10)
-      } else fetch(`${this.apiPath}rand_textures/?id=${t}-${s}`).then((e => e.json())).then((e => {
-        1 !== e.textures.id || 1 !== s && 0 !== s ? this.loadModel(t, e.textures.id, "我的新衣服好看嘛？") : o("我还没有其他衣服呢！", 4e3, 10)
-      }))
-    }
+//看板娘样式设置
+live2d_settings['waifuSize']            = '230x230';    // 看板娘大小，例如 '280x250', '600x535'
+live2d_settings['waifuTipsSize']        = '200x50';     // 提示框大小，例如 '250x70', '570x150'
+live2d_settings['waifuFontSize']        = '13px';       // 提示框字体，例如 '12px', '30px'
+live2d_settings['waifuToolFont']        = '14px';       // 工具栏字体，例如 '14px', '36px'
+live2d_settings['waifuToolLine']        = '35px';       // 工具栏行高，例如 '20px', '36px'
+live2d_settings['waifuToolTop']         = '0px'         // 工具栏顶部边距，例如 '0px', '-60px'
+live2d_settings['waifuMinWidth']        = '350px';      // 面页小于 指定宽度 隐藏看板娘，例如 'disable'(禁用), '768px'
+live2d_settings['waifuEdgeSide']        = 'right:30';     // 看板娘贴边方向，例如 'left:0'(靠左 0px), 'right:30'(靠右 30px)
+live2d_settings['waifuDraggable']       = 'disable';    // 拖拽样式，例如 'disable'(禁用), 'axis-x'(只能水平拖拽), 'unlimited'(自由拖拽)
+live2d_settings['waifuDraggableRevert'] = true;         // 松开鼠标还原拖拽位置，可选 true(真), false(假)
 
-    async loadOtherModel() {
-      let e = localStorage.getItem("modelId");
-      let c = (Math.floor(Math.random()*2) + 3) === 3 ? 117:26;
-      if (this.useCDN) {
-        this.modelList || await this.loadModelList();
-        const t = ++e >= this.modelList.models.length ? 0 : e;
-        this.loadModel(t, c, this.modelList.messages[t])
-      } else fetch(`${this.apiPath}switch/?id=${e}`).then((e => e.json())).then((e => {
-        this.loadModel(e.model.id, c, e.model.message)
-      }))
-    }
-  }
+// 其他杂项设置
+live2d_settings['l2dVersion']           = '1.4.2';        // 当前版本
+live2d_settings['l2dVerDate']           = '2018.11.12'; // 版本更新日期
+live2d_settings['homePageUrl']          = 'auto';       // 主页地址，可选 'auto'(自动), '{URL 网址}'
+live2d_settings['aboutPageUrl']         = 'https://www.fghrsh.net/post/123.html';   // 关于页地址, '{URL 网址}'
+live2d_settings['screenshotCaptureName']= 'live2d.png'; // 看板娘截图文件名，例如 'live2d.png'
 
-  const n = {
-    hitokoto: {
-      icon: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">\x3c!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --\x3e<path d="M512 240c0 114.9-114.6 208-256 208c-37.1 0-72.3-6.4-104.1-17.9c-11.9 8.7-31.3 20.6-54.3 30.6C73.6 471.1 44.7 480 16 480c-6.5 0-12.3-3.9-14.8-9.9c-2.5-6-1.1-12.8 3.4-17.4l0 0 0 0 0 0 0 0 .3-.3c.3-.3 .7-.7 1.3-1.4c1.1-1.2 2.8-3.1 4.9-5.7c4.1-5 9.6-12.4 15.2-21.6c10-16.6 19.5-38.4 21.4-62.9C17.7 326.8 0 285.1 0 240C0 125.1 114.6 32 256 32s256 93.1 256 208z"/></svg>',
-      callback: function () {
-        fetch("https://v1.hitokoto.cn").then((e => e.json())).then((e => {
-          o(e.hitokoto, 6e3, 9), setTimeout((() => {
-            o(t, 4e3, 9)
-          }), 6e3)
-        }))
-      }
-    },
-    asteroids: {
-      icon: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">\x3c!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --\x3e<path d="M498.1 5.6c10.1 7 15.4 19.1 13.5 31.2l-64 416c-1.5 9.7-7.4 18.2-16 23s-18.9 5.4-28 1.6L277.3 424.9l-40.1 74.5c-5.2 9.7-16.3 14.6-27 11.9S192 499 192 488V392c0-5.3 1.8-10.5 5.1-14.7L362.4 164.7c2.5-7.1-6.5-14.3-13-8.4L170.4 318.2l-32 28.9 0 0c-9.2 8.3-22.3 10.6-33.8 5.8l-85-35.4C8.4 312.8 .8 302.2 .1 290s5.5-23.7 16.1-29.8l448-256c10.7-6.1 23.9-5.5 34 1.4z"/></svg>',
-      callback: () => {
-        if (window.Asteroids) window.ASTEROIDSPLAYERS || (window.ASTEROIDSPLAYERS = []), window.ASTEROIDSPLAYERS.push(new Asteroids); else {
-          const e = document.createElement("script");
-          e.src = "https://fastly.jsdelivr.net/gh/stevenjoezhang/asteroids/asteroids.js", document.head.appendChild(e)
+live2d_settings['nowModelID']           = 0;
+live2d_settings['nowTexturesID']        = 0;
+
+/****************************************************************************************************/
+
+// Load static api configurations
+var staticAPI;
+$.getJSON(live2d_settings.staticAPIFile,function(result){
+    staticAPI = result;
+});
+
+function localAPI(action, modelID, texturesID=0){
+    //modelID = modelID>0 ? modelID-1 : 0;
+    //texturesID = texturesID>0 ? texturesID-1 : 0;
+    if(action === 'get'){
+        live2d_settings.nowModelID = modelID;
+        live2d_settings.nowTexturesID = texturesID;
+        if(staticAPI === undefined){
+            let blob = new Blob(
+                [live2d_settings.defaultModel], { type: 'Application/json' }
+            )  // type 的值为要创建的文件的MIME
+            return URL.createObjectURL( blob );
+        } else {
+            if(typeof staticAPI.model_list.models[modelID] === 'string'){
+                let json_pat = staticAPI.json_pattern[staticAPI.model_list.models[modelID]];
+                json_pat = json_pat.replace(/\"TEXTURES_REP\"/g, JSON.stringify(staticAPI.Textures[modelID][texturesID]));
+                
+                json_pat = json_pat.replace(/MODEL_HOME/g, live2d_settings['staticPath']);
+                let blob = new Blob(
+                    [json_pat], { type: 'Application/json' }
+                )  // type 的值为要创建的文件的MIME
+                return URL.createObjectURL( blob );
+            } else {
+                let model_name = staticAPI.model_list.models[modelID][texturesID];
+                let json_pat = staticAPI.json_pattern[model_name];
+                json_pat = json_pat.replace(/\"TEXTURES_REP\"/g, JSON.stringify(staticAPI.Textures[modelID][texturesID]));
+                json_pat = json_pat.replace(/MODEL_HOME/g, live2d_settings['staticPath']);
+                let blob = new Blob(
+                    [json_pat], { type: 'Application/json' }
+                )  // type 的值为要创建的文件的MIME
+                return URL.createObjectURL( blob );
+            }
         }
-      }
-    },
-    "switch-model": {
-      icon: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">\x3c!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --\x3e<path d="M399 384.2C376.9 345.8 335.4 320 288 320H224c-47.4 0-88.9 25.8-111 64.2c35.2 39.2 86.2 63.8 143 63.8s107.8-24.7 143-63.8zM512 256c0 141.4-114.6 256-256 256S0 397.4 0 256S114.6 0 256 0S512 114.6 512 256zM256 272c39.8 0 72-32.2 72-72s-32.2-72-72-72s-72 32.2-72 72s32.2 72 72 72z"/></svg>',
-      callback: () => {
-      }
-    },
-    "switch-texture": {
-      icon: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">\x3c!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --\x3e<path d="M320 64c0-35.3-28.7-64-64-64s-64 28.7-64 64s28.7 64 64 64s64-28.7 64-64zm-96 96c-35.3 0-64 28.7-64 64v48c0 17.7 14.3 32 32 32h1.8l11.1 99.5c1.8 16.2 15.5 28.5 31.8 28.5h38.7c16.3 0 30-12.3 31.8-28.5L318.2 304H320c17.7 0 32-14.3 32-32V224c0-35.3-28.7-64-64-64H224zM132.3 394.2c13-2.4 21.7-14.9 19.3-27.9s-14.9-21.7-27.9-19.3c-32.4 5.9-60.9 14.2-82 24.8c-10.5 5.3-20.3 11.7-27.8 19.6C6.4 399.5 0 410.5 0 424c0 21.4 15.5 36.1 29.1 45c14.7 9.6 34.3 17.3 56.4 23.4C130.2 504.7 190.4 512 256 512s125.8-7.3 170.4-19.6c22.1-6.1 41.8-13.8 56.4-23.4c13.7-8.9 29.1-23.6 29.1-45c0-13.5-6.4-24.5-14-32.6c-7.5-7.9-17.3-14.3-27.8-19.6c-21-10.6-49.5-18.9-82-24.8c-13-2.4-25.5 6.3-27.9 19.3s6.3 25.5 19.3 27.9c30.2 5.5 53.7 12.8 69 20.5c3.2 1.6 5.8 3.1 7.9 4.5c3.6 2.4 3.6 7.2 0 9.6c-8.8 5.7-23.1 11.8-43 17.3C374.3 457 318.5 464 256 464s-118.3-7-157.7-17.9c-19.9-5.5-34.2-11.6-43-17.3c-3.6-2.4-3.6-7.2 0-9.6c2.1-1.4 4.8-2.9 7.9-4.5c15.3-7.7 38.8-14.9 69-20.5z"/></svg>',
-      callback: () => {
-      }
-    },
-    photo: {
-      icon: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">\x3c!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --\x3e<path d="M220.6 121.2L271.1 96 448 96v96H333.2c-21.9-15.1-48.5-24-77.2-24s-55.2 8.9-77.2 24H64V128H192c9.9 0 19.7-2.3 28.6-6.8zM0 128V416c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H271.1c-9.9 0-19.7 2.3-28.6 6.8L192 64H160V48c0-8.8-7.2-16-16-16H80c-8.8 0-16 7.2-16 16l0 16C28.7 64 0 92.7 0 128zM344 304c0 48.6-39.4 88-88 88s-88-39.4-88-88s39.4-88 88-88s88 39.4 88 88z"/></svg>',
-      callback: () => {
-        o("照好了嘛，是不是很可爱呢？", 6e3, 9), Live2D.captureName = "photo.png", Live2D.captureFrame = !0
-      }
-    }
-  };
-
-  function i(t) {
-    const i = new s(t);
-
-    function c(t) {
-      let s, n = !1, i = t.message.default;
-      window.addEventListener("mousemove", (() => n = !0)), window.addEventListener("keydown", (() => n = !0)), setInterval((() => {
-        n ? (n = !1, clearInterval(s), s = null) : s || (s = setInterval((() => {
-          o(i, 6e3, 9)
-        }), 2e4))
-      }), 1e3), o(function (e) {
-        if ("/" === location.pathname) for (let {hour: t, text: o} of e) {
-          const e = new Date, s = t.split("-")[0], n = t.split("-")[1] || s;
-          if (s <= e.getHours() && e.getHours() <= n) return o
+    } else if (action === 'randModel'){
+        let newModelID = Math.floor(Math.random()*(staticAPI.model_list.models.length));
+        while(newModelID === modelID && newModelID !== 0){
+            newModelID = Math.floor(Math.random()*(staticAPI.model_list.models.length));
         }
-        const t = `欢迎阅读<span>「${document.title.split(" - ")[0]}」</span>`;
-        let o;
-        if ("" !== document.referrer) {
-          const e = new URL(document.referrer), s = e.hostname.split(".")[1],
-            n = {baidu: "百度", so: "360搜索", google: "谷歌搜索"};
-          return location.hostname === e.hostname ? t : (o = s in n ? n[s] : e.hostname, `Hello！来自 <span>${o}</span> 的朋友<br>${t}`)
+        loadModel(newModelID, 0);
+        showMessage(staticAPI.model_list.messages[newModelID], 3000, true);
+    } else if (action === 'switchModel'){
+        let newModelID = modelID+1;
+        if(newModelID >= staticAPI.model_list.models.length){
+            newModelID = 0;
         }
-        return t
-      }(t.time), 7e3, 11), window.addEventListener("mouseover", (s => {
-        for (let {selector: n, text: i} of t.mouseover) if (s.target.matches(n)) return i = e(i), i = i.replace("{text}", s.target.innerText), void o(i, 4e3, 8)
-      })), window.addEventListener("click", (s => {
-        for (let {selector: n, text: i} of t.click) if (s.target.matches(n)) return i = e(i), i = i.replace("{text}", s.target.innerText), void o(i, 4e3, 8)
-      })), t.seasons.forEach((({date: t, text: o}) => {
-        const s = new Date, n = t.split("-")[0], c = t.split("-")[1] || n;
-        n.split("/")[0] <= s.getMonth() + 1 && s.getMonth() + 1 <= c.split("/")[0] && n.split("/")[1] <= s.getDate() && s.getDate() <= c.split("/")[1] && (o = (o = e(o)).replace("{year}", s.getFullYear()), i.push(o))
-      }));
-      const c = () => {
-      };
-      console.log("%c", c), c.toString = () => {
-        o(t.message.console, 6e3, 9)
-      }, window.addEventListener("copy", (() => {
-        o(t.message.copy, 6e3, 9)
-      })), window.addEventListener("visibilitychange", (() => {
-        document.hidden || o(t.message.visibilitychange, 6e3, 9)
-      }))
+        loadModel(newModelID, 0);
+        showMessage(staticAPI.model_list.messages[newModelID], 3000, true);
+    } else if (action === 'randTextures'){
+        let totalTexturesNum;
+        if(typeof staticAPI.model_list.models[modelID] === 'string'){
+            totalTexturesNum = staticAPI.Textures[modelID].length;
+        } else {
+            totalTexturesNum = staticAPI.model_list.models[modelID].length;
+        }
+        let newTextureID = Math.floor(Math.random()*totalTexturesNum);
+        while(newTextureID === texturesID){
+            newTextureID = Math.floor(Math.random()*totalTexturesNum);
+        }
+        loadModel(modelID, newTextureID);
+    } else if (action === 'switchTextures'){
+        let totalTexturesNum;
+        if(typeof staticAPI.model_list.models[modelID] === 'string'){
+            totalTexturesNum = staticAPI.Textures[modelID].length;
+        } else {
+            totalTexturesNum = staticAPI.model_list.models[modelID].length;
+        }
+        let newTextureID = TexturesID + 1;
+        if(newTextureID >= totalTexturesNum && newTextureID !== 0){
+            newTextureID = 0;
+        }
+        loadModel(modelID, newTextureID);
     }
+}
 
-    localStorage.removeItem("waifu-display"), sessionStorage.removeItem("waifu-text"), document.body.insertAdjacentHTML("beforeend", '<div id="waifu">\n            <div id="waifu-tips"></div>\n            <canvas id="live2d" width="800" height="800"></canvas>\n            <div id="waifu-tool"></div>\n        </div>'), setTimeout((() => {
-      document.getElementById("waifu").style.bottom = 0
-    }), 0), function () {
-      n["switch-model"].callback = () => i.loadOtherModel(), n["switch-texture"].callback = () => i.loadRandModel(), Array.isArray(t.tools) || (t.tools = Object.keys(n));
-      for (let e of t.tools) if (n[e]) {
-        const {icon: t, callback: o} = n[e];
-        document.getElementById("waifu-tool").insertAdjacentHTML("beforeend", `<span id="waifu-tool-${e}">${t}</span>`), document.getElementById(`waifu-tool-${e}`).addEventListener("click", o)
-      }
-    }(), function () {
-      let e = localStorage.getItem("modelId"), o = localStorage.getItem("modelTexturesId");
-      null === e && (e = 1, o = 53), i.loadModel(e, o), fetch(t.waifuPath).then((e => e.json())).then(c)
-    }()
-  }
 
-  window.initWidget = function (e, t) {
-    "string" == typeof e && (e = {
-      waifuPath: e,
-      apiPath: t
-    }), document.body.insertAdjacentHTML("beforeend", '<div id="waifu-toggle">\n            <span>看板娘</span>\n        </div>');
-    const o = document.getElementById("waifu-toggle");
-    o.addEventListener("click", (() => {
-      o.classList.remove("waifu-toggle-active"), o.getAttribute("first-time") ? (i(e), o.removeAttribute("first-time")) : (localStorage.removeItem("waifu-display"), document.getElementById("waifu").style.display = "", setTimeout((() => {
-        document.getElementById("waifu").style.bottom = 0
-      }), 0))
-    })), localStorage.getItem("waifu-display") && Date.now() - localStorage.getItem("waifu-display") <= 864e5 ? (o.setAttribute("first-time", !0), setTimeout((() => {
-      o.classList.add("waifu-toggle-active")
-    }), 0)) : i(e)
-  }
-}();
+String.prototype.render = function(context) {
+    var tokenReg = /(\\)?\{([^\{\}\\]+)(\\)?\}/g;
+
+    return this.replace(tokenReg, function (word, slash1, token, slash2) {
+        if (slash1 || slash2) { return word.replace('\\', ''); }
+        
+        var variables = token.replace(/\s/g, '').split('.');
+        var currentObject = context;
+        var i, length, variable;
+        
+        for (i = 0, length = variables.length; i < length; ++i) {
+            variable = variables[i];
+            currentObject = currentObject[variable];
+            if (currentObject === undefined || currentObject === null) return '';
+        }
+        return currentObject;
+    });
+};
+
+var re = /x/;
+console.log(re);
+
+function empty(obj) {return typeof obj=="undefined"||obj==null||obj==""?true:false}
+function getRandText(text) {return Array.isArray(text) ? text[Math.floor(Math.random() * text.length + 1)-1] : text}
+
+function showMessage(text, timeout, flag) {
+    if(flag || sessionStorage.getItem('waifu-text') === '' || sessionStorage.getItem('waifu-text') === null){
+        if(Array.isArray(text)) text = text[Math.floor(Math.random() * text.length + 1)-1];
+        if (live2d_settings.showF12Message) console.log('[Message]', text.replace(/<[^<>]+>/g,''));
+        
+        if(flag) sessionStorage.setItem('waifu-text', text);
+        
+        $('.waifu-tips').stop();
+        $('.waifu-tips').html(text).fadeTo(200, 1);
+        if (timeout === undefined) timeout = 5000;
+        hideMessage(timeout);
+    }
+}
+
+function hideMessage(timeout) {
+    $('.waifu-tips').stop().css('opacity',1);
+    if (timeout === undefined) timeout = 5000;
+    window.setTimeout(function() {sessionStorage.removeItem('waifu-text')}, timeout);
+    $('.waifu-tips').delay(timeout).fadeTo(200, 0);
+}
+
+function initModel(waifuPath, type) {
+    /* console welcome message */
+    eval(function(p,a,c,k,e,r){e=function(c){return(c<a?'':e(parseInt(c/a)))+((c=c%a)>35?String.fromCharCode(c+29):c.toString(36))};if(!''.replace(/^/,String)){while(c--)r[e(c)]=k[c]||e(c);k=[function(e){return r[e]}];e=function(){return'\\w+'};c=1};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p}('8.d(" ");8.d("\\U,.\\y\\5.\\1\\1\\1\\1/\\1,\\u\\2 \\H\\n\\1\\1\\1\\1\\1\\b \', !-\\r\\j-i\\1/\\1/\\g\\n\\1\\1\\1 \\1 \\a\\4\\f\'\\1\\1\\1 L/\\a\\4\\5\\2\\n\\1\\1 \\1 /\\1 \\a,\\1 /|\\1 ,\\1 ,\\1\\1\\1 \',\\n\\1\\1\\1\\q \\1/ /-\\j/\\1\\h\\E \\9 \\5!\\1 i\\n\\1\\1\\1 \\3 \\6 7\\q\\4\\c\\1 \\3\'\\s-\\c\\2!\\t|\\1 |\\n\\1\\1\\1\\1 !,/7 \'0\'\\1\\1 \\X\\w| \\1 |\\1\\1\\1\\n\\1\\1\\1\\1 |.\\x\\"\\1\\l\\1\\1 ,,,, / |./ \\1 |\\n\\1\\1\\1\\1 \\3\'| i\\z.\\2,,A\\l,.\\B / \\1.i \\1|\\n\\1\\1\\1\\1\\1 \\3\'| | / C\\D/\\3\'\\5,\\1\\9.\\1|\\n\\1\\1\\1\\1\\1\\1 | |/i \\m|/\\1 i\\1,.\\6 |\\F\\1|\\n\\1\\1\\1\\1\\1\\1.|/ /\\1\\h\\G \\1 \\6!\\1\\1\\b\\1|\\n\\1\\1\\1 \\1 \\1 k\\5>\\2\\9 \\1 o,.\\6\\2 \\1 /\\2!\\n\\1\\1\\1\\1\\1\\1 !\'\\m//\\4\\I\\g\', \\b \\4\'7\'\\J\'\\n\\1\\1\\1\\1\\1\\1 \\3\'\\K|M,p,\\O\\3|\\P\\n\\1\\1\\1\\1\\1 \\1\\1\\1\\c-,/\\1|p./\\n\\1\\1\\1\\1\\1 \\1\\1\\1\'\\f\'\\1\\1!o,.:\\Q \\R\\S\\T v"+e.V+" / W "+e.N);8.d(" ");',60,60,'|u3000|uff64|uff9a|uff40|u30fd|uff8d||console|uff8a|uff0f|uff3c|uff84|log|live2d_settings|uff70|u00b4|uff49||u2010||u3000_|u3008||_|___|uff72|u2500|uff67|u30cf|u30fc||u30bd|u4ece|u30d8|uff1e|__|u30a4|k_|uff17_|u3000L_|u3000i|uff1a|u3009|uff34|uff70r|u30fdL__||___i|l2dVerDate|u30f3|u30ce|nLive2D|u770b|u677f|u5a18|u304f__|l2dVersion|FGHRSH|u00b40i'.split('|'),0,{}));
+    
+    /* 判断 JQuery */
+    if (typeof($.ajax) != 'function') typeof(jQuery.ajax) == 'function' ? window.$ = jQuery : console.log('[Error] JQuery is not defined.');
+    
+    /* 加载看板娘样式 */
+    live2d_settings.waifuSize = live2d_settings.waifuSize.split('x');
+    live2d_settings.waifuTipsSize = live2d_settings.waifuTipsSize.split('x');
+    live2d_settings.waifuEdgeSide = live2d_settings.waifuEdgeSide.split(':');
+    
+    $("#live2d").attr("width",live2d_settings.waifuSize[0]);
+    $("#live2d").attr("height",live2d_settings.waifuSize[1]);
+    $(".waifu-tips").width(live2d_settings.waifuTipsSize[0]);
+    $(".waifu-tips").height(live2d_settings.waifuTipsSize[1]);
+    $(".waifu-tips").css("top",live2d_settings.waifuToolTop);
+    $(".waifu-tips").css("font-size",live2d_settings.waifuFontSize);
+    $(".waifu-tool").css("font-size",live2d_settings.waifuToolFont);
+    $(".waifu-tool span").css("line-height",live2d_settings.waifuToolLine);
+    
+    if (live2d_settings.waifuEdgeSide[0] == 'left') $(".waifu").css("left",live2d_settings.waifuEdgeSide[1]+'px');
+    else if (live2d_settings.waifuEdgeSide[0] == 'right') $(".waifu").css("right",live2d_settings.waifuEdgeSide[1]+'px');
+    
+    window.waifuResize = function() { $(window).width() <= Number(live2d_settings.waifuMinWidth.replace('px','')) ? $(".waifu").hide() : $(".waifu").show(); };
+    if (live2d_settings.waifuMinWidth != 'disable') { waifuResize(); $(window).resize(function() {waifuResize()}); }
+    
+    try {
+        if (live2d_settings.waifuDraggable == 'axis-x') $(".waifu").draggable({ axis: "x", revert: live2d_settings.waifuDraggableRevert });
+        else if (live2d_settings.waifuDraggable == 'unlimited') $(".waifu").draggable({ revert: live2d_settings.waifuDraggableRevert });
+        else $(".waifu").css("transition", 'all .3s ease-in-out');
+    } catch(err) { console.log('[Error] JQuery UI is not defined.') }
+    
+    live2d_settings.homePageUrl == 'auto' ? window.location.protocol+'//'+window.location.hostname+'/' : live2d_settings.homePageUrl;
+    if (window.location.protocol == 'file:' && live2d_settings.modelAPI.substr(0,2) == '//') live2d_settings.modelAPI = 'http:'+live2d_settings.modelAPI;
+    
+    $('.waifu-tool .fui-home').click(function (){
+        //window.location = 'https://www.fghrsh.net/';
+        window.location = live2d_settings.homePageUrl;
+    });
+    
+    $('.waifu-tool .fui-info-circle').click(function (){
+        //window.open('https://imjad.cn/archives/lab/add-dynamic-poster-girl-with-live2d-to-your-blog-02');
+        window.open(live2d_settings.aboutPageUrl);
+    });
+    
+    if (typeof(waifuPath) == "object") loadTipsMessage(waifuPath); else {
+        $.ajax({
+            cache: true,
+            url: waifuPath == '' ? live2d_settings.tipsMessage : (waifuPath.substr(waifuPath.length-15)=='waifu-tips.json'?waifuPath:waifuPath+'waifu-tips.json'),
+            dataType: "json",
+            success: function (result){ loadTipsMessage(result); }
+        });
+    }
+    
+    if (!live2d_settings.showToolMenu) $('.waifu-tool').hide();
+    if (!live2d_settings.canCloseLive2d) $('.waifu-tool .fui-cross').hide();
+    if (!live2d_settings.canSwitchModel) $('.waifu-tool .fui-eye').hide();
+    if (!live2d_settings.canSwitchTextures) $('.waifu-tool .fui-user').hide();
+    if (!live2d_settings.canSwitchHitokoto) $('.waifu-tool .fui-chat').hide();
+    if (!live2d_settings.canTakeScreenshot) $('.waifu-tool .fui-photo').hide();
+    if (!live2d_settings.canTurnToHomePage) $('.waifu-tool .fui-home').hide();
+    if (!live2d_settings.canTurnToAboutPage) $('.waifu-tool .fui-info-circle').hide();
+
+    if (waifuPath === undefined) waifuPath = '';
+    var modelId = localStorage.getItem('modelId');
+    var modelTexturesId = localStorage.getItem('modelTexturesId');
+    
+    if (!live2d_settings.modelStorage || modelId == null) {
+        var modelId = live2d_settings.modelId;
+        var modelTexturesId = live2d_settings.modelTexturesId;
+    } loadModel(modelId, modelTexturesId);
+}
+
+function loadModel(modelId, modelTexturesId=0) {
+    if (live2d_settings.modelStorage) {
+        localStorage.setItem('modelId', modelId);
+        localStorage.setItem('modelTexturesId', modelTexturesId);
+    } else {
+        sessionStorage.setItem('modelId', modelId);
+        sessionStorage.setItem('modelTexturesId', modelTexturesId);
+    //} loadlive2d('live2d', live2d_settings.modelAPI+'get/?id='+modelId+'-'+modelTexturesId, (live2d_settings.showF12Status ? console.log('[Status]','live2d','模型',modelId+'-'+modelTexturesId,'加载完成'):null));
+    } loadlive2d('live2d', localAPI('get', modelId, modelTexturesId), (live2d_settings.showF12Status ? console.log('[Status]','live2d','模型',modelId+'-'+modelTexturesId,'加载完成'):null));
+}
+
+function loadTipsMessage(result) {
+    window.waifu_tips = result;
+    
+    $.each(result.mouseover, function (index, tips){
+        $(document).on("mouseover", tips.selector, function (){
+            var text = getRandText(tips.text);
+            text = text.render({text: $(this).text()});
+            showMessage(text, 3000);
+        });
+    });
+    $.each(result.click, function (index, tips){
+        $(document).on("click", tips.selector, function (){
+            var text = getRandText(tips.text);
+            text = text.render({text: $(this).text()});
+            showMessage(text, 3000, true);
+        });
+    });
+    $.each(result.seasons, function (index, tips){
+        var now = new Date();
+        var after = tips.date.split('-')[0];
+        var before = tips.date.split('-')[1] || after;
+        
+        if((after.split('/')[0] <= now.getMonth()+1 && now.getMonth()+1 <= before.split('/')[0]) && 
+           (after.split('/')[1] <= now.getDate() && now.getDate() <= before.split('/')[1])){
+            var text = getRandText(tips.text);
+            text = text.render({year: now.getFullYear()});
+            showMessage(text, 6000, true);
+        }
+    });
+    
+    if (live2d_settings.showF12OpenMsg) {
+        re.toString = function() {
+            showMessage(getRandText(result.waifu.console_open_msg), 5000, true);
+            return '';
+        };
+    }
+    
+    if (live2d_settings.showCopyMessage) {
+        $(document).on('copy', function() {
+            showMessage(getRandText(result.waifu.copy_message), 5000, true);
+        });
+    }
+    
+    $('.waifu-tool .fui-photo').click(function(){
+        showMessage(getRandText(result.waifu.screenshot_message), 5000, true);
+        window.Live2D.captureName = live2d_settings.screenshotCaptureName;
+        window.Live2D.captureFrame = true;
+    });
+    
+    $('.waifu-tool .fui-cross').click(function(){
+        sessionStorage.setItem('waifu-dsiplay', 'none');
+        showMessage(getRandText(result.waifu.hidden_message), 1300, true);
+        window.setTimeout(function() {$('.waifu').hide();}, 1300);
+    });
+    
+    window.showWelcomeMessage = function(result) {
+        var text;
+        if (window.location.href == live2d_settings.homePageUrl) {
+            var now = (new Date()).getHours();
+            if (now > 23 || now <= 5) text = getRandText(result.waifu.hour_tips.t23-5);
+            else if (now > 5 && now <= 7) text = getRandText(result.waifu.hour_tips.t5-7);
+            else if (now > 7 && now <= 11) text = getRandText(result.waifu.hour_tips.t7-11);
+            else if (now > 11 && now <= 14) text = getRandText(result.waifu.hour_tips.t11-14);
+            else if (now > 14 && now <= 17) text = getRandText(result.waifu.hour_tips.t14-17);
+            else if (now > 17 && now <= 19) text = getRandText(result.waifu.hour_tips.t17-19);
+            else if (now > 19 && now <= 21) text = getRandText(result.waifu.hour_tips.t19-21);
+            else if (now > 21 && now <= 23) text = getRandText(result.waifu.hour_tips.t21-23);
+            else text = getRandText(result.waifu.hour_tips.default);
+        } else {
+            var referrer_message = result.waifu.referrer_message;
+            if (document.referrer !== '') {
+                var referrer = document.createElement('a');
+                referrer.href = document.referrer;
+                var domain = referrer.hostname.split('.')[1];
+                if (window.location.hostname == referrer.hostname)
+                    text = referrer_message.localhost[0] + document.title.split(referrer_message.localhost[2])[0] + referrer_message.localhost[1];
+                else if (domain == 'baidu')
+                    text = referrer_message.baidu[0] + referrer.search.split('&wd=')[1].split('&')[0] + referrer_message.baidu[1];
+                else if (domain == 'so')
+                    text = referrer_message.so[0] + referrer.search.split('&q=')[1].split('&')[0] + referrer_message.so[1];
+                else if (domain == 'google')
+                    text = referrer_message.google[0] + document.title.split(referrer_message.google[2])[0] + referrer_message.google[1];
+                else {
+                    $.each(result.waifu.referrer_hostname, function(i,val) {if (i==referrer.hostname) referrer.hostname = getRandText(val)});
+                    text = referrer_message.default[0] + referrer.hostname + referrer_message.default[1];
+                }
+            } else text = referrer_message.none[0] + document.title.split(referrer_message.none[2])[0] + referrer_message.none[1];
+        }
+        showMessage(text, 6000);
+    }; if (live2d_settings.showWelcomeMessage) showWelcomeMessage(result);
+    
+    var waifu_tips = result.waifu;
+    
+    function loadOtherModel() {
+        /*var modelId = modelStorageGetItem('modelId');
+        var modelRandMode = live2d_settings.modelRandMode;
+        
+        /*$.ajax({
+            cache: modelRandMode == 'switch' ? true : false,
+            url: live2d_settings.modelAPI+modelRandMode+'/?id='+modelId,
+            dataType: "json",
+            success: function(result) {
+                loadModel(result.model['id']);
+                var message = result.model['message'];
+                $.each(waifu_tips.model_message, function(i,val) {if (i==result.model['id']) message = getRandText(val)});
+                showMessage(message, 3000, true);
+            }
+        });*/
+        localAPI(live2d_settings.modelRandMode+'Model', live2d_settings.nowModelID);
+    }
+    
+    function loadRandTextures() {
+        /*var modelId = modelStorageGetItem('modelId');
+        var modelTexturesId = modelStorageGetItem('modelTexturesId');
+        var modelTexturesRandMode = live2d_settings.modelTexturesRandMode;
+        
+        /*$.ajax({
+            cache: modelTexturesRandMode == 'switch' ? true : false,
+            url: live2d_settings.modelAPI+modelTexturesRandMode+'_textures/?id='+modelId+'-'+modelTexturesId,
+            dataType: "json",
+            success: function(result) {
+                if (result.textures['id'] == 1 && (modelTexturesId == 1 || modelTexturesId == 0))
+                    showMessage(waifu_tips.load_rand_textures[0], 3000, true);
+                else showMessage(waifu_tips.load_rand_textures[1], 3000, true);
+                loadModel(modelId, result.textures['id']);
+            }
+        });*/
+        localAPI(live2d_settings.modelTexturesRandMode+'Textures', live2d_settings.nowModelID, live2d_settings.nowTexturesID);
+    }
+    
+    function modelStorageGetItem(key) { return live2d_settings.modelStorage ? localStorage.getItem(key) : sessionStorage.getItem(key); }
+    
+    /* 检测用户活动状态，并在空闲时显示一言 */
+    if (live2d_settings.showHitokoto) {
+        window.getActed = false; window.hitokotoTimer = 0; window.hitokotoInterval = false;
+        $(document).mousemove(function(e){getActed = true;}).keydown(function(){getActed = true;});
+        setInterval(function(){ if (!getActed) ifActed(); else elseActed(); }, 1000);
+    }
+    
+    function ifActed() {
+        if (!hitokotoInterval) {
+            hitokotoInterval = true;
+            hitokotoTimer = window.setInterval(showHitokotoActed, 30000);
+        }
+    }
+    
+    function elseActed() {
+        getActed = hitokotoInterval = false;
+        window.clearInterval(hitokotoTimer);
+    }
+    
+    function showHitokotoActed() {
+        if ($(document)[0].visibilityState == 'visible') showHitokoto();
+    }
+    
+    function showHitokoto() {
+    	switch(live2d_settings.hitokotoAPI) {
+    	    case 'lwl12.com':
+    	        $.getJSON('https://api.lwl12.com/hitokoto/v1?encode=realjson',function(result){
+        	        if (!empty(result.source)) {
+                        var text = waifu_tips.hitokoto_api_message['lwl12.com'][0];
+                        if (!empty(result.author)) text += waifu_tips.hitokoto_api_message['lwl12.com'][1];
+                        text = text.render({source: result.source, creator: result.author});
+                        window.setTimeout(function() {showMessage(text+waifu_tips.hitokoto_api_message['lwl12.com'][2], 3000, true);}, 5000);
+                    } showMessage(result.text, 5000, true);
+                });break;
+    	    case 'fghrsh.net':
+    	        $.getJSON('https://api.fghrsh.net/hitokoto/rand/?encode=jsc&uid=3335',function(result){
+            	    if (!empty(result.source)) {
+                        var text = waifu_tips.hitokoto_api_message['fghrsh.net'][0];
+                        text = text.render({source: result.source, date: result.date});
+                        window.setTimeout(function() {showMessage(text, 3000, true);}, 5000);
+                        showMessage(result.hitokoto, 5000, true);
+            	    }
+                });break;
+            case 'jinrishici.com':
+                $.ajax({
+                    url: 'https://v2.jinrishici.com/one.json',
+                    xhrFields: {withCredentials: true},
+                    success: function (result, status) {
+                        if (!empty(result.data.origin.title)) {
+                            var text = waifu_tips.hitokoto_api_message['jinrishici.com'][0];
+                            text = text.render({title: result.data.origin.title, dynasty: result.data.origin.dynasty, author:result.data.origin.author});
+                            window.setTimeout(function() {showMessage(text, 3000, true);}, 5000);
+                        } showMessage(result.data.content, 5000, true);
+                    }
+                });break;
+    	    default:
+    	        $.getJSON('https://v1.hitokoto.cn',function(result){
+            	    if (!empty(result.from)) {
+                        var text = waifu_tips.hitokoto_api_message['hitokoto.cn'][0];
+                        text = text.render({source: result.from, creator: result.creator});
+                        window.setTimeout(function() {showMessage(text, 3000, true);}, 5000);
+            	    }
+                    showMessage(result.hitokoto, 5000, true);
+                });
+    	}
+    }
+    
+    $('.waifu-tool .fui-eye').click(function (){loadOtherModel()});
+    $('.waifu-tool .fui-user').click(function (){loadRandTextures()});
+    $('.waifu-tool .fui-chat').click(function (){showHitokoto()});
+}
