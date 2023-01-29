@@ -29,34 +29,16 @@ if (screen.width >= 768) {
 	Promise.all([
 		loadExternalResource(live2d_path + "waifu-right.css", "css"),
 		loadExternalResource(live2d_path + "live2d.min.js", "js"),
-		loadExternalResource(live2d_path + "waifu-tips.js", "js")
+		loadExternalResource(live2d_path + "waifu-tips.js", "js"),
+		loadExternalResource(live2d_path + "src/tools.js", "js")
 	]).then(() => {
 		// 配置选项的具体用法见 README.md
 		initWidget({
 			waifuPath: live2d_path + "waifu-tips.json",
-			//apiPath: "https://live2d.fghrsh.net/api/",
+			apiPath: "https://live2d.fghrsh.net/api/",
 			cdnPath: "https://fastly.jsdelivr.net/gh/fghrsh/live2d_api/",
 			tools: ["hitokoto", "asteroids", "switch-model", "switch-texture", "photo", "info", "quit"]
 		});
 	});
 }
 
-console.log(`
-  く__,.ヘヽ.        /  ,ー､ 〉
-           ＼ ', !-─‐-i  /  /´
-           ／｀ｰ'       L/／｀ヽ､
-         /   ／,   /|   ,   ,       ',
-       ｲ   / /-‐/  ｉ  L_ ﾊ ヽ!   i
-        ﾚ ﾍ 7ｲ｀ﾄ   ﾚ'ｧ-ﾄ､!ハ|   |
-          !,/7 '0'     ´0iソ|    |
-          |.从"    _     ,,,, / |./    |
-          ﾚ'| i＞.､,,__  _,.イ /   .i   |
-            ﾚ'| | / k_７_/ﾚ'ヽ,  ﾊ.  |
-              | |/i 〈|/   i  ,.ﾍ |  i  |
-             .|/ /  ｉ：    ﾍ!    ＼  |
-              kヽ>､ﾊ    _,.ﾍ､    /､!
-              !'〈//｀Ｔ´', ＼ ｀'7'ｰr'
-              ﾚ'ヽL__|___i,___,ンﾚ|ノ
-                  ﾄ-,/  |___./
-                  'ｰ'    !_,.:
-`);
