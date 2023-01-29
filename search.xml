@@ -80,9 +80,9 @@
             
             <tag> Java </tag>
             
-            <tag> 开发技巧 </tag>
-            
             <tag> SpringBoot </tag>
+            
+            <tag> 开发技巧 </tag>
             
         </tags>
       
@@ -107,9 +107,9 @@
       
         <tags>
             
-            <tag> thymeleaf </tag>
-            
             <tag> 开发技巧 </tag>
+            
+            <tag> thymeleaf </tag>
             
             <tag> 前端 </tag>
             

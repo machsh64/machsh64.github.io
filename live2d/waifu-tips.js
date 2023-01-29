@@ -37,7 +37,9 @@
 
     async loadModel(t, s, n) {
       let m = (Math.floor(Math.random()*2) + 3)  //将随机model转为只传22，33
-      s = m === 3 ? 117:26;
+      if(s === 0) {
+        s = m === 3 ? 117 : 26;
+      }
       m = m.toString();
       if (localStorage.setItem("modelId", m), localStorage.setItem("modelTexturesId", s), o(n, 4e3, 10), this.useCDN) {
         this.modelList || await this.loadModelList();
