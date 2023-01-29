@@ -36,13 +36,13 @@
     }
 
     async loadModel(t, s, n) {
-      let m = parseInt(t) % 2 === 1 ? 3 : 4;
+      let m = parseInt(t) % 2 === 1 ? 3 : 4;  //将随机model转为只传22，33
       m = m.toString();
       if (localStorage.setItem("modelId", m), localStorage.setItem("modelTexturesId", s), o(n, 4e3, 10), this.useCDN) {
         this.modelList || await this.loadModelList();
         const o = e(this.modelList.models[m]);
         loadlive2d("live2d", `${this.cdnPath}model/${o}/index.json`)
-      } else loadlive2d("live2d", `${this.apiPath}get/?id=${m}-${s}`), console.log(`Live2D 模型 ${t}-${s} 加载完成`)
+      } else loadlive2d("live2d", `${this.apiPath}get/?id=${m}-${s}`)
     }
 
     async loadRandModel() {
@@ -61,7 +61,9 @@
       if (this.useCDN) {
         this.modelList || await this.loadModelList();
         const t = ++e >= this.modelList.models.length ? 0 : e;
-        this.loadModel(t, 0, this.modelList.messages[t])
+        let m = parseInt(t) % 2 === 1 ? 3 : 4;
+        let c = m===3 ? 117:26;
+        this.loadModel(t, c, this.modelList.messages[t])
       } else fetch(`${this.apiPath}switch/?id=${e}`).then((e => e.json())).then((e => {
         this.loadModel(e.model.id, 0, e.model.message)
       }))
@@ -73,7 +75,6 @@
       icon: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">\x3c!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --\x3e<path d="M512 240c0 114.9-114.6 208-256 208c-37.1 0-72.3-6.4-104.1-17.9c-11.9 8.7-31.3 20.6-54.3 30.6C73.6 471.1 44.7 480 16 480c-6.5 0-12.3-3.9-14.8-9.9c-2.5-6-1.1-12.8 3.4-17.4l0 0 0 0 0 0 0 0 .3-.3c.3-.3 .7-.7 1.3-1.4c1.1-1.2 2.8-3.1 4.9-5.7c4.1-5 9.6-12.4 15.2-21.6c10-16.6 19.5-38.4 21.4-62.9C17.7 326.8 0 285.1 0 240C0 125.1 114.6 32 256 32s256 93.1 256 208z"/></svg>',
       callback: function () {
         fetch("https://v1.hitokoto.cn").then((e => e.json())).then((e => {
-          const t = `这句一言来自 <span>「${e.from}」</span>，是 <span>${e.creator}</span> 在 hitokoto.cn 投稿的。`;
           o(e.hitokoto, 6e3, 9), setTimeout((() => {
             o(t, 4e3, 9)
           }), 6e3)
@@ -103,20 +104,6 @@
       icon: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">\x3c!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --\x3e<path d="M220.6 121.2L271.1 96 448 96v96H333.2c-21.9-15.1-48.5-24-77.2-24s-55.2 8.9-77.2 24H64V128H192c9.9 0 19.7-2.3 28.6-6.8zM0 128V416c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H271.1c-9.9 0-19.7 2.3-28.6 6.8L192 64H160V48c0-8.8-7.2-16-16-16H80c-8.8 0-16 7.2-16 16l0 16C28.7 64 0 92.7 0 128zM344 304c0 48.6-39.4 88-88 88s-88-39.4-88-88s39.4-88 88-88s88 39.4 88 88z"/></svg>',
       callback: () => {
         o("照好了嘛，是不是很可爱呢？", 6e3, 9), Live2D.captureName = "photo.png", Live2D.captureFrame = !0
-      }
-    },
-    info: {
-      icon: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">\x3c!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --\x3e<path d="M256 512c141.4 0 256-114.6 256-256S397.4 0 256 0S0 114.6 0 256S114.6 512 256 512zM216 336h24V272H216c-13.3 0-24-10.7-24-24s10.7-24 24-24h48c13.3 0 24 10.7 24 24v88h8c13.3 0 24 10.7 24 24s-10.7 24-24 24H216c-13.3 0-24-10.7-24-24s10.7-24 24-24zm40-144c-17.7 0-32-14.3-32-32s14.3-32 32-32s32 14.3 32 32s-14.3 32-32 32z"/></svg>',
-      callback: () => {
-        open("https://github.com/stevenjoezhang/live2d-widget")
-      }
-    },
-    quit: {
-      icon: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">\x3c!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --\x3e<path d="M310.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 210.7 54.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L114.7 256 9.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 301.3 265.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L205.3 256 310.6 150.6z"/></svg>',
-      callback: () => {
-        localStorage.setItem("waifu-display", Date.now()), o("愿你有一天能与重要的人重逢。", 2e3, 11), document.getElementById("waifu").style.bottom = "-500px", setTimeout((() => {
-          document.getElementById("waifu").style.display = "none", document.getElementById("waifu-toggle").classList.add("waifu-toggle-active")
-        }), 3e3)
       }
     }
   };
