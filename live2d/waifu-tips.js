@@ -36,7 +36,12 @@
     }
 
     async loadModel(t, s, n) {
-      let m = (Math.floor(Math.random()*2) + 3)  //将随机model转为只传22，33
+      let m;
+      if (t!== 3||t!==4){
+        m = (Math.floor(Math.random()*2) + 3)  //将随机model转为只传22，33
+      }else {
+        m = t;
+      }
       if(s === 0) {
         s = m === 3 ? 117 : 26;
       }
