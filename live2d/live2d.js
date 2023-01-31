@@ -3241,10 +3241,12 @@ function(t) {
 					alert("profile _$6 _$Ui : " + t)
 				}
 				arguments.length < 2 && (i = !0), i && console.log("profile : " + t.PROFILE_NAME);
-				for (var e in t) at[e] = t[e], i && console.log("  [" + e + "] = " + t[e])
 			}, at.init = function() {
 				if (at._$6b) {
-					console.log("Live2D %s", at._$2s), at._$6b = !1;
+					console.log("Live2D 源代码来自 stevenjoezhang 的 live2d-widget"), at._$6b = !1;
+					console.log("因原 FGHRSH 提供的api停用"), at._$6b = !1;
+					console.log("使用了 panedioic 的无需Api版本"), at._$6b = !1;
+					console.log("在以上大佬基础上，本土化修改了部分代码还请原作者包涵 ❤来自 Ren"), at._$6b = !1;
 					!0, at.initProfile()
 				}
 			}, at.getVersionStr = function() {
