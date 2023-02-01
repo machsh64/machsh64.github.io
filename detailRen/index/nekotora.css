@@ -1,0 +1,83 @@
+@font-face {
+  font-family: &apos;nekotora&apos;;
+  src: url(&apos;../font/nekotora.eot?37630306&apos;);
+  src: url(&apos;../font/nekotora.eot?37630306#iefix&apos;) format(&apos;embedded-opentype&apos;),
+       url(&apos;../font/nekotora.woff2?37630306&apos;) format(&apos;woff2&apos;),
+       url(&apos;../font/nekotora.woff?37630306&apos;) format(&apos;woff&apos;),
+       url(&apos;../font/nekotora.ttf?37630306&apos;) format(&apos;truetype&apos;),
+       url(&apos;../font/nekotora.svg?37630306#nekotora&apos;) format(&apos;svg&apos;);
+  font-weight: normal;
+  font-style: normal;
+}
+/* Chrome hack: SVG is rendered more smooth in Windozze. 100% magic, uncomment if you need it. */
+/* Note, that will break hinting! In other OS-es font will be not as sharp as it could be */
+/*
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  @font-face {
+    font-family: &apos;nekotora&apos;;
+    src: url(&apos;../font/nekotora.svg?37630306#nekotora&apos;) format(&apos;svg&apos;);
+  }
+}
+*/
+ 
+ [class^=&quot;icon-&quot;]:before, [class*=&quot; icon-&quot;]:before {
+  font-family: &quot;nekotora&quot;;
+  font-style: normal;
+  font-weight: normal;
+  speak: none;
+ 
+  display: inline-block;
+  text-decoration: inherit;
+  width: 1em;
+  margin-right: .2em;
+  text-align: center;
+  /* opacity: .8; */
+ 
+  /* For safety - reset parent styles, that can break glyph codes*/
+  font-variant: normal;
+  text-transform: none;
+ 
+  /* fix buttons height, for twitter bootstrap */
+  line-height: 1em;
+ 
+  /* Animation center compensation - margins should be symmetric */
+  /* remove if not needed */
+  margin-left: .2em;
+ 
+  /* you can be more comfortable with increased icons size */
+  /* font-size: 120%; */
+ 
+  /* Font smoothing. That was taken from TWBS */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+ 
+  /* Uncomment for 3D effect */
+  /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
+}
+ 
+.icon-search:before { content: &apos;\e800&apos;; } /* &apos;&#xE800;&apos; */
+.icon-info:before { content: &apos;\e801&apos;; } /* &apos;&#xE801;&apos; */
+.icon-comment:before { content: &apos;\e802&apos;; } /* &apos;&#xE802;&apos; */
+.icon-v2ex:before { content: &apos;\e803&apos;; } /* &apos;&#xE803;&apos; */
+.icon-zhihu:before { content: &apos;\e804&apos;; } /* &apos;&#xE804;&apos; */
+.icon-bilibili:before { content: &apos;\e805&apos;; } /* &apos;&#xE805;&apos; */
+.icon-netease_music:before { content: &apos;\e806&apos;; } /* &apos;&#xE806;&apos; */
+.icon-tencent_qzone:before { content: &apos;\e807&apos;; } /* &apos;&#xE807;&apos; */
+.icon-mail:before { content: &apos;\e808&apos;; } /* &apos;&#xE808;&apos; */
+.icon-bookmark:before { content: &apos;\e809&apos;; } /* &apos;&#xE809;&apos; */
+.icon-link:before { content: &apos;\e80a&apos;; } /* &apos;&#xE80A;&apos; */
+.icon-logo{
+	height: 20px;
+    width: 20px;
+}	
+.icon-gplus:before { content: &apos;\f0d5&apos;; } /* &apos;&#xF0D5;&apos; */
+.icon-github:before { content: &apos;\f113&apos;; } /* &apos;&#xF113;&apos; */
+.icon-unlink:before { content: &apos;\f127&apos;; } /* &apos;&#xF127;&apos; */
+.icon-instagram:before { content: &apos;\f16d&apos;; } /* &apos;&#xF16D;&apos; */
+.icon-weibo:before { content: &apos;\f18a&apos;; } /* &apos;&#xF18A;&apos; */
+.icon-qq:before { content: &apos;\f1d6&apos;; } /* &apos;&#xF1D6;&apos; */
+
+.icon-tg{
+	height: 25px;
+    width: 25px;
+}	
