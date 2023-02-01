@@ -96,3 +96,6 @@
     --lyx-theme: #26aec0 /*我的主题色*/
 }
 
+#footer-wrap {
+    padding: 0; 
+}
