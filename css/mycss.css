@@ -1,9 +1,33 @@
-
+/* 全局字体 */
 @font-face {
     font-family: 'ComicSansMs';
     font-display: swap;
     src: url("/font/Comic-Sans-MS.ttf") format("truetype");
 }
+
+/* main距离上边栏 */
+.layout {
+    padding: 30px 15px;
+}
+
+@media screen and (max-width: 1300px){
+    .layout {
+        padding: 20px 15px;
+    }
+}
+
+@media screen and (max-width: 900px){
+    .layout {
+        padding: 4px 15px;
+    }
+}
+
+@media screen and (max-width: 768px){
+    .layout {
+       padding: 0px 5px;
+    }
+}
+
 
 /* headerline */
 #page-header.not-top-img #nav {

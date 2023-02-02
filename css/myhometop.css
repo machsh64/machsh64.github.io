@@ -25,7 +25,7 @@
     display: flex;
     width: 100%;
     overflow-x: scroll;
-    line-height: 0;
+    /* line-height: 0; */
 }
 
 .recent-post-top::-webkit-scrollbar {
@@ -54,7 +54,8 @@
     .recent-post-top .recent-post-item {
         border-radius:8px;
         box-shadow: none;
-        clip-path: inset(0 0 0 0 round 8px)
+        clip-path: inset(0 0 0 0 round 8px);
+        line-height: 0;
     }
 
     .recent-post-top .recent-post-item:last-child {
@@ -65,7 +66,8 @@
 @media screen and (min-width: 1300px) {
     .recent-post-top .recent-post-item {
         margin-right:0;
-        margin-bottom: .5rem
+        margin-bottom: .5rem;
+        line-height: 0;
     }
 
     .recent-post-top .recent-post-item:active {
@@ -298,7 +300,7 @@ div#banners {
     display: flex;
     cursor: pointer;
     pointer-events: all;
-    background: url(https://s1.ax1x.com/2023/02/01/pSDGBE6.jpg) no-repeat center/cover;
+    background: url(https://s1.ax1x.com/2023/02/02/pSrhcIP.jpg) no-repeat center/cover;
     }
 
   .topGroup .rightCard-info {

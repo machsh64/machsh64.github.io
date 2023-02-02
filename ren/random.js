@@ -1,0 +1,1 @@
+var posts=["2023/01/28/tengwanggexu/","2023/01/28/FileUp/","2023/01/28/LoginInterceptor/","2023/01/26/thymeleafskills/","2023/01/25/first-blog/","2022/07/20/ride-taiyu-to-changwu/"];function toRandomPost(){pjax.loadUrl('/'+posts[Math.floor(Math.random() * posts.length)]);};
