@@ -855,7 +855,8 @@
     align-items: flex-start;
     background: var(--bywind-card-bg);
     box-shadow: var(--bywind-shadow-border);
-    margin-right: 2%
+    margin-right: 2%;
+    background-color: #c8dbdd;
 }
 
 #bber .timeline ul li.item hr {
