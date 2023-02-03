@@ -21,3 +21,6 @@ for (var i = 0; i < card_category_list.length; i++) {
     card_category_list[i].previousSibling.innerHTML +=
         '<i class="fa fa-chevron-up menus-expand  menus-closed" aria-hidden="true" style="margin-left:20px;" onclick="toggle(this)"></i>';
 }
+
+
+
