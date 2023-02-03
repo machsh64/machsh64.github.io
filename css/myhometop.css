@@ -108,6 +108,19 @@
 
 /* ******** */
 
+/* ***** 即刻页面 ****** */
+
+.author-content.author-content-item.essayPage {
+  height: 19rem;
+  /* background: url(https://pic.rmb.bdstatic.com/bjh/1ef4c55….jpeg) no-repeat center; */
+  background-size: cover;
+  color: var(--bywind-white);
+  overflow: hidden;
+  margin-top: 0;
+}
+
+/* ******************** */
+
 .recent-top-post-group {
     border-radius: 12px;
     overflow: hidden;
