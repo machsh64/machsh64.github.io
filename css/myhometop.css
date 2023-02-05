@@ -20,6 +20,43 @@
 }
 
 
+.topGroup .banner-button-group {
+  position: absolute;
+  right: 2rem;
+  bottom: 2rem;
+  display: flex;
+  transition: .3s
+}
+
+.topGroup .todayCard.hide .banner-button-group {
+  bottom: 1rem
+}
+
+.topGroup .banner-button {
+  background: var(--bywind-white-op);
+  border-radius: 20px;
+  color: var(--bywind-white);
+  display: flex;
+  align-items: center;
+  z-index: 1;
+  transition: .3s;
+  cursor: pointer;
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  height: 40px;
+  width: 124px;
+  justify-content: center
+}
+
+.topGroup .banner-button:hover {
+  background: var(--bywind-theme);
+  color: var(--bywind-white)
+}
+
+.topGroup .banner-button i {
+  margin-right: 8px;
+  font-size: 1rem
+}
 
 /*   ******   */
 
@@ -178,6 +215,7 @@
         margin-right:0;
         margin-bottom: .5rem;
         line-height: 0;
+        margin-top: 10px;
     }
 
     .recent-post-top .recent-post-item:active {
@@ -394,6 +432,10 @@ div#banners {
 
 @media screen and (min-width: 1300px) {
 
+  .rightCard {
+  
+  }
+
   .topGroup .rightCard {
     position: absolute;
     width: calc(587px + 1rem);
@@ -402,7 +444,6 @@ div#banners {
     top: 0;
     left: 0;
     padding: 0 0;
-    background: var(--card-bg);
     border-radius: 22px;
     margin-left: .5rem;
     overflow: hidden;
@@ -410,8 +451,19 @@ div#banners {
     display: flex;
     cursor: pointer;
     pointer-events: all;
-    background: url(https://s1.ax1x.com/2023/02/02/pSrhcIP.jpg) no-repeat center/cover;
     }
+
+    .rightCard-cover {
+      position: absolute;
+      min-width: 100%;
+      min-height: 100%;
+      top: 0;
+      left: 0;
+      background-size: cover;
+      z-index: -1;
+      transition: .3s;
+      background: url(https://s1.ax1x.com/2023/02/02/pSrhcIP.jpg) no-repeat center/cover;
+  }
 
   .topGroup .rightCard-info {
     position: absolute;
@@ -446,8 +498,10 @@ div#banners {
     backdrop-filter: saturate(180%) blur(20px);
     -webkit-backdrop-filter: blur(20px);
     height: 40px;
-    width: 124px;
-    justify-content: center;
+    width: 24px;
+    margin-left: 0px;
+    transform: translateY(4%);
+    color: #bfc2c3;
   }
 
   .topGroup {
