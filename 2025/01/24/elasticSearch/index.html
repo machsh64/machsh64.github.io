@@ -1,0 +1,245 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"><title>ES 的快速搭建 | Ren |life</title><meta name="author" content="Ren"><meta name="copyright" content="Ren"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="如上">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ES 的快速搭建">
+<meta property="og:url" content="https://machsh64.github.io/2025/01/24/elasticSearch/index.html">
+<meta property="og:site_name" content="Ren |life">
+<meta property="og:description" content="如上">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://blog.hubwiz.com/2016/11/23/Elasticsearch/Elasticsearch.jpg">
+<meta property="article:published_time" content="2025-01-23T19:30:07.000Z">
+<meta property="article:modified_time" content="2025-01-23T19:33:14.241Z">
+<meta property="article:author" content="Ren">
+<meta property="article:tag" content="后端">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://blog.hubwiz.com/2016/11/23/Elasticsearch/Elasticsearch.jpg"><link rel="shortcut icon" href="/img/favicon.ico"><link rel="canonical" href="https://machsh64.github.io/2025/01/24/elasticSearch/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":null},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'ES 的快速搭建',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: undefined,
+  isToc: true,
+  postUpdate: '2025-01-24 03:33:14'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = url => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      link.onload = () => resolve()
+      link.onerror = () => reject()
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/mycss.css"><link rel="stylesheet" href="/css/myhometop.css"><link rel="stylesheet" href="/css/essaycss.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/js-heo@1.0.11/bb/showbb_in_index.css"><script src="https://cdn.staticaly.com/gh/haonan15/CDN@main/source/waterfall.min.js"></script><!-- hexo injector head_end start --><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-double-row-display@1.00/cardlistpost.min.css"/>
+<style>#recent-posts > .recent-post-item >.recent-post-info > .article-meta-wrap > .tags:before {content:"\A";
+  white-space: pre;}#recent-posts > .recent-post-item >.recent-post-info > .article-meta-wrap > .tags > .article-meta__separator{display:none}</style>
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js/themes/blue/pace-theme-minimal.min.css"/><script src="https://cdn.jsdelivr.net/npm/pace-js/pace.min.js"></script><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/author.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">23</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">10</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">9</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/essay/"><span> Essay</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><span> About ME</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="Ren |life"><span class="site-name">Ren |life</span></a></span><div id="menus"></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/essay/"><span> Essay</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><span> About ME</span></a></div></div><div id="nav-right"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i></a></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">ES 的快速搭建</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-01-23T19:30:07.000Z" title="发表于 2025-01-24 03:30:07">2025-01-24</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-01-23T19:33:14.241Z" title="更新于 2025-01-24 03:33:14">2025-01-24</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E9%83%A8%E7%BD%B2/">部署</a></span></div><div class="meta-secondline"></div></div></div><article class="post-content" id="article-container"><h1 id="ElassticSearch-&#x5FEB;&#x901F;&#x642D;&#x5EFA;"><a href="#ElassticSearch-&#x5FEB;&#x901F;&#x642D;&#x5EFA;" class="headerlink" title="ElassticSearch &#x5FEB;&#x901F;&#x642D;&#x5EFA;"></a>ElassticSearch &#x5FEB;&#x901F;&#x642D;&#x5EFA;</h1><h2 id="1-&#x62C9;&#x53D6;&#x5E76;&#x89E3;&#x538B;&#x4E0B;&#x8F7D;&#x6240;&#x9700;&#x7248;&#x672C;&#x7684;-ES-&#xFF08;&#x672C;&#x793A;&#x4F8B;&#x4E3A;-7-17-16&#xFF09;"><a href="#1-&#x62C9;&#x53D6;&#x5E76;&#x89E3;&#x538B;&#x4E0B;&#x8F7D;&#x6240;&#x9700;&#x7248;&#x672C;&#x7684;-ES-&#xFF08;&#x672C;&#x793A;&#x4F8B;&#x4E3A;-7-17-16&#xFF09;" class="headerlink" title="1 &#x62C9;&#x53D6;&#x5E76;&#x89E3;&#x538B;&#x4E0B;&#x8F7D;&#x6240;&#x9700;&#x7248;&#x672C;&#x7684; ES &#xFF08;&#x672C;&#x793A;&#x4F8B;&#x4E3A; 7.17.16&#xFF09;"></a>1 &#x62C9;&#x53D6;&#x5E76;&#x89E3;&#x538B;&#x4E0B;&#x8F7D;&#x6240;&#x9700;&#x7248;&#x672C;&#x7684; ES &#xFF08;&#x672C;&#x793A;&#x4F8B;&#x4E3A; 7.17.16&#xFF09;</h2><p>&#x5728; <a target="_blank" rel="noopener" href="https://www.elastic.co/cn/downloads/past-releases#elasticsearch">elastic&#x7F51;&#x7AD9;</a> &#x4E0B;&#x8F7D;&#x5BF9;&#x5E94;&#x538B;&#x7F29;&#x5305;&#xFF0C;&#x6216;&#x76F4;&#x63A5;wget</p>
+<p>&#x79FB;&#x52A8;&#x5230;&#x670D;&#x52A1;&#x5668;&#x76EE;&#x5F55;&#xFF0C;&#x4F8B;&#x5982; /home/elasticsearch/</p>
+<p>&#x89E3;&#x538B;</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf elasticsearch-7.17.16-linux-x86_64.tar.gz</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x5904;&#x7406;"><a href="#2-&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x5904;&#x7406;" class="headerlink" title="2 &#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x5904;&#x7406;"></a>2 &#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x5904;&#x7406;</h2><h3 id="2-1-&#x4FEE;&#x6539;&#x914D;&#x7F6E;&#x6587;&#x4EF6;-elasticsearch-yml"><a href="#2-1-&#x4FEE;&#x6539;&#x914D;&#x7F6E;&#x6587;&#x4EF6;-elasticsearch-yml" class="headerlink" title="2.1 &#x4FEE;&#x6539;&#x914D;&#x7F6E;&#x6587;&#x4EF6; elasticsearch.yml"></a>2.1 &#x4FEE;&#x6539;&#x914D;&#x7F6E;&#x6587;&#x4EF6; elasticsearch.yml</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> elasticsearch-7.17.16-linux-x86_64.tar.gz</span><br><span class="line"></span><br><span class="line">vim config/elasticsearch.yml</span><br><span class="line"></span><br><span class="line"><span class="comment">###### elasticsearch.yml ######</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># &#x8BBE;&#x7F6E;&#x4E3A;&#x5355;&#x673A;&#x6A21;&#x5F0F;</span></span><br><span class="line">discovery.type: single-node</span><br><span class="line"></span><br><span class="line"><span class="comment"># &#x7F51;&#x6BB5;&#x4E3A;&#x6240;&#x6709;&#x53EF;&#x8BBF;&#x95EE;</span></span><br><span class="line">network.host: 0.0.0.0</span><br><span class="line">http.port: 9200</span><br><span class="line"><span class="comment"># &#x900F;&#x8FC7;cors&#x8DE8;&#x57DF;&#x8BF7;&#x6C42;</span></span><br><span class="line">http.cors.enabled: <span class="literal">true</span></span><br><span class="line">http.cors.allow-origin: <span class="string">&quot;*&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># &#x5934;&#x90E8;&#x52A0;&#x4E0A; AUTH</span></span><br><span class="line">http.cors.allow-headers: Authorization</span><br><span class="line"></span><br><span class="line"><span class="comment"># &#x5B89;&#x5168;&#x6A21;&#x5757;&#x5F00;&#x542F;&#xFF0C;&#x9632;&#x6B62;&#x542F;&#x52A8;&#x62A5;&#x9519;</span></span><br><span class="line">xpack.security.enabled: <span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="comment">###############################</span></span><br></pre></td></tr></table></figure>
+<h3 id="2-2-&#x4FEE;&#x6539;&#x542F;&#x52A8;&#x5305;&#x4E2D;&#x7684;jdk&#x4F4D;&#x7F6E;&#x4E3A;ES&#x81EA;&#x5E26;&#x7684;jdk"><a href="#2-2-&#x4FEE;&#x6539;&#x542F;&#x52A8;&#x5305;&#x4E2D;&#x7684;jdk&#x4F4D;&#x7F6E;&#x4E3A;ES&#x81EA;&#x5E26;&#x7684;jdk" class="headerlink" title="2.2 &#x4FEE;&#x6539;&#x542F;&#x52A8;&#x5305;&#x4E2D;&#x7684;jdk&#x4F4D;&#x7F6E;&#x4E3A;ES&#x81EA;&#x5E26;&#x7684;jdk"></a>2.2 &#x4FEE;&#x6539;&#x542F;&#x52A8;&#x5305;&#x4E2D;&#x7684;jdk&#x4F4D;&#x7F6E;&#x4E3A;ES&#x81EA;&#x5E26;&#x7684;jdk</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">vim bin/elasticsearch</span><br><span class="line"></span><br><span class="line"><span class="comment">###### elasticsearch ######</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> JAVA_HOME=/home/elasticsearch/elasticsearch-7.17.16/jdk</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$JAVA_HOME</span>/bin:<span class="variable">$PATH</span></span><br><span class="line"></span><br><span class="line"><span class="comment">###########################</span></span><br></pre></td></tr></table></figure>
+<h3 id="2-3-&#x4FEE;&#x6539;es&#x7684;jvm&#x5806;&#x5185;&#x5B58;&#x5927;&#x5C0F;"><a href="#2-3-&#x4FEE;&#x6539;es&#x7684;jvm&#x5806;&#x5185;&#x5B58;&#x5927;&#x5C0F;" class="headerlink" title="2.3 &#x4FEE;&#x6539;es&#x7684;jvm&#x5806;&#x5185;&#x5B58;&#x5927;&#x5C0F;"></a>2.3 &#x4FEE;&#x6539;es&#x7684;jvm&#x5806;&#x5185;&#x5B58;&#x5927;&#x5C0F;</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">vim config/jvm.options</span><br><span class="line"></span><br><span class="line"><span class="comment">###### jvm.options ######</span></span><br><span class="line"></span><br><span class="line">-Xms1g</span><br><span class="line">-Xms1g</span><br><span class="line"></span><br><span class="line"><span class="comment">##########################</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="3-&#x521B;&#x5EFA;es&#x4E13;&#x7528;&#x7528;&#x6237;"><a href="#3-&#x521B;&#x5EFA;es&#x4E13;&#x7528;&#x7528;&#x6237;" class="headerlink" title="3 &#x521B;&#x5EFA;es&#x4E13;&#x7528;&#x7528;&#x6237;"></a>3 &#x521B;&#x5EFA;es&#x4E13;&#x7528;&#x7528;&#x6237;</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># &#x56E0;&#x4E3A;es&#x8FD0;&#x884C;&#x4E0D;&#x53EF;&#x4E3A;root&#x7528;&#x6237;&#xFF0C;&#x5219;&#x521B;&#x5EFA; user-es &#x4F9B;es&#x4F7F;&#x7528;</span></span><br><span class="line">sudo useradd user-es</span><br><span class="line"></span><br><span class="line"><span class="comment"># &#x8BBE;&#x7F6E;&#x5BC6;&#x7801;</span></span><br><span class="line">sudo passwd user-es</span><br><span class="line"></span><br><span class="line"><span class="comment"># &#x5C06; user-es &#x52A0;&#x5165;&#x7BA1;&#x7406;&#x5458;&#x7EC4;</span></span><br><span class="line">sudo usermod -aG root user-es</span><br></pre></td></tr></table></figure>
+<h2 id="4-&#x542F;&#x52A8;"><a href="#4-&#x542F;&#x52A8;" class="headerlink" title="4 &#x542F;&#x52A8;"></a>4 &#x542F;&#x52A8;</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># &#x5207;&#x6362;&#x5230; user-es </span></span><br><span class="line">su user-es</span><br><span class="line"></span><br><span class="line"><span class="comment"># &#x542F;&#x52A8;&#x9879;&#x76EE;</span></span><br><span class="line">bin/elasticsearch</span><br><span class="line"><span class="comment"># &#x540E;&#x53F0;&#x542F;&#x52A8;</span></span><br><span class="line">bin/elasticsearch -d</span><br></pre></td></tr></table></figure>
+<h2 id="5-&#x8BBE;&#x7F6E;es&#x7528;&#x6237;&#x7EC4;&#x5BC6;&#x7801;"><a href="#5-&#x8BBE;&#x7F6E;es&#x7528;&#x6237;&#x7EC4;&#x5BC6;&#x7801;" class="headerlink" title="5 &#x8BBE;&#x7F6E;es&#x7528;&#x6237;&#x7EC4;&#x5BC6;&#x7801;"></a>5 &#x8BBE;&#x7F6E;es&#x7528;&#x6237;&#x7EC4;&#x5BC6;&#x7801;</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># &#x9996;&#x5148;&#x6D4B;&#x8BD5;&#x9879;&#x76EE;&#x662F;&#x5426;&#x542F;&#x52A8;&#x6210;&#x529F;</span></span><br><span class="line">crul http://127.0.0.1:9200/</span><br><span class="line"></span><br><span class="line"><span class="comment"># &#x5728;es&#x542F;&#x52A8;&#x4E2D;&#xFF0C;&#x6267;&#x884C;</span></span><br><span class="line">bin/elasticsearch-setup-passwords interactive</span><br><span class="line"></span><br><span class="line"><span class="comment"># &#x51FA;&#x73B0;</span></span><br><span class="line">Initiating the setup of passwords <span class="keyword">for</span> reserved <span class="built_in">users</span> </span><br><span class="line">elastic,apm_system,kibana,kibana_system,logstash_system,beats_system,remote_monitoring_user.</span><br><span class="line">You will be prompted to enter passwords as the process progresses.</span><br><span class="line">Please confirm that you would like to <span class="built_in">continue</span> [y/N]y</span><br><span class="line"><span class="comment"># &#x8FDB;&#x884C;&#x8BBE;&#x7F6E;&#x5BC6;&#x7801;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># &#x6D4B;&#x8BD5;&#x5BC6;&#x7801;&#x662F;&#x5426;&#x8BBE;&#x7F6E;&#x6210;&#x529F;</span></span><br><span class="line"></span><br><span class="line">curl -u elastic:password http://127.0.0.1:9200/</span><br></pre></td></tr></table></figure></article><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%90%8E%E7%AB%AF/">后端</a></div><div class="post_share"></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2024/12/31/RocketMqDe/" title="RocketMqDe"><img class="cover" src="https://res.172173.com/images/20230130142458.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">RocketMqDe</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#ElassticSearch-%E5%BF%AB%E9%80%9F%E6%90%AD%E5%BB%BA"><span class="toc-number">1.</span> <span class="toc-text">ElassticSearch 快速搭建</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E6%8B%89%E5%8F%96%E5%B9%B6%E8%A7%A3%E5%8E%8B%E4%B8%8B%E8%BD%BD%E6%89%80%E9%9C%80%E7%89%88%E6%9C%AC%E7%9A%84-ES-%EF%BC%88%E6%9C%AC%E7%A4%BA%E4%BE%8B%E4%B8%BA-7-17-16%EF%BC%89"><span class="toc-number">1.1.</span> <span class="toc-text">1 拉取并解压下载所需版本的 ES （本示例为 7.17.16）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E5%A4%84%E7%90%86"><span class="toc-number">1.2.</span> <span class="toc-text">2 配置文件处理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E4%BF%AE%E6%94%B9%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6-elasticsearch-yml"><span class="toc-number">1.2.1.</span> <span class="toc-text">2.1 修改配置文件 elasticsearch.yml</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E4%BF%AE%E6%94%B9%E5%90%AF%E5%8A%A8%E5%8C%85%E4%B8%AD%E7%9A%84jdk%E4%BD%8D%E7%BD%AE%E4%B8%BAES%E8%87%AA%E5%B8%A6%E7%9A%84jdk"><span class="toc-number">1.2.2.</span> <span class="toc-text">2.2 修改启动包中的jdk位置为ES自带的jdk</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-%E4%BF%AE%E6%94%B9es%E7%9A%84jvm%E5%A0%86%E5%86%85%E5%AD%98%E5%A4%A7%E5%B0%8F"><span class="toc-number">1.2.3.</span> <span class="toc-text">2.3 修改es的jvm堆内存大小</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E5%88%9B%E5%BB%BAes%E4%B8%93%E7%94%A8%E7%94%A8%E6%88%B7"><span class="toc-number">1.3.</span> <span class="toc-text">3 创建es专用用户</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E5%90%AF%E5%8A%A8"><span class="toc-number">1.4.</span> <span class="toc-text">4 启动</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E8%AE%BE%E7%BD%AEes%E7%94%A8%E6%88%B7%E7%BB%84%E5%AF%86%E7%A0%81"><span class="toc-number">1.5.</span> <span class="toc-text">5 设置es用户组密码</span></a></li></ol></li></ol></div></div></div></div></main><!--if (footerBg) if (footerBg === true)
+   - var footer_bg = bg_img
+ else
+   - var footer_bg = isImgOrUrl(theme.footer_bg) ? `background-image: url('${url_for(footerBg)}')` : `background: ${footerBg}`
+else
+  - var footer_bg = ''
+--><footer id="footer" style="background-color: transparent;"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2025 By Ren</div><div class="framework-info"><span>2023 </span><a target="_blank" rel="noopener" href="https://github.com/machsh64">Ren</a><span class="footer-separator">|</span><span> PASSIONE</span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"></div><script src="/ren/random.js"></script><script src="/js/essayjs.js"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener scroll 
+  window.tocScrollFn && window.removeEventListener('scroll', window.tocScrollFn)
+  window.scrollCollect && window.removeEventListener('scroll', scrollCollect)
+
+  document.getElementById('rightside').style.cssText = "opacity: ''; transform: ''"
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+  typeof disqusjs === 'object' && disqusjs.destroy()
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', (e) => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
