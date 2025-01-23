@@ -1,0 +1,238 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"><title>Jackson2json对象映射器 | Ren |life</title><meta name="author" content="Ren"><meta name="copyright" content="Ren"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="在后端像前端转换数据时，遇到bigint数据被前端js16位限制导致数据丢失的解决方法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Jackson2json对象映射器">
+<meta property="og:url" content="https://machsh64.github.io/2023/02/28/Jackson2HttpMsg/index.html">
+<meta property="og:site_name" content="Ren |life">
+<meta property="og:description" content="在后端像前端转换数据时，遇到bigint数据被前端js16位限制导致数据丢失的解决方法">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.328888.xyz/2023/02/28/zcpWo.png">
+<meta property="article:published_time" content="2023-02-28T10:35:45.000Z">
+<meta property="article:modified_time" content="2023-02-28T10:49:00.000Z">
+<meta property="article:author" content="Ren">
+<meta property="article:tag" content="后端">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.328888.xyz/2023/02/28/zcpWo.png"><link rel="shortcut icon" href="/img/favicon.ico"><link rel="canonical" href="https://machsh64.github.io/2023/02/28/Jackson2HttpMsg/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":null},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Jackson2json对象映射器',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: undefined,
+  isToc: true,
+  postUpdate: '2023-02-28 18:49:00'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = url => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      link.onload = () => resolve()
+      link.onerror = () => reject()
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/mycss.css"><link rel="stylesheet" href="/css/myhometop.css"><link rel="stylesheet" href="/css/essaycss.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/js-heo@1.0.11/bb/showbb_in_index.css"><script src="https://cdn.staticaly.com/gh/haonan15/CDN@main/source/waterfall.min.js"></script><!-- hexo injector head_end start --><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-double-row-display@1.00/cardlistpost.min.css"/>
+<style>#recent-posts > .recent-post-item >.recent-post-info > .article-meta-wrap > .tags:before {content:"\A";
+  white-space: pre;}#recent-posts > .recent-post-item >.recent-post-info > .article-meta-wrap > .tags > .article-meta__separator{display:none}</style>
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js/themes/blue/pace-theme-minimal.min.css"/><script src="https://cdn.jsdelivr.net/npm/pace-js/pace.min.js"></script><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/author.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">22</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">10</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">9</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/essay/"><span> Essay</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><span> About ME</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="Ren |life"><span class="site-name">Ren |life</span></a></span><div id="menus"></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/essay/"><span> Essay</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><span> About ME</span></a></div></div><div id="nav-right"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i></a></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">Jackson2json对象映射器</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-02-28T10:35:45.000Z" title="发表于 2023-02-28 18:35:45">2023-02-28</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-02-28T10:49:00.000Z" title="更新于 2023-02-28 18:49:00">2023-02-28</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Java/">Java</a></span></div><div class="meta-secondline"></div></div></div><article class="post-content" id="article-container"><h2 id="&#x5728;&#x6570;&#x636E;&#x5E93;&#x4F7F;&#x7528;&#x96EA;&#x82B1;&#x7B97;&#x6CD5;&#x7684;id&#x65F6;&#xFF0C;&#x540E;&#x7AEF;&#x5411;&#x524D;&#x7AEF;&#x8F6C;&#x6362;json&#x6570;&#x636E;&#x7684;id&#xFF0C;&#x7CBE;&#x5EA6;&#x4E22;&#x5931;&#xFF0C;&#x6240;&#x4EE5;&#x540E;&#x7AEF;&#x4F7F;&#x7528;&#x5BF9;&#x8C61;&#x6620;&#x5C04;&#x5668;&#x5C06;Long&#x578B;&#x6570;&#x636E;&#x76F4;&#x63A5;&#x8F6C;&#x6362;&#x4E3A;String&#x4F20;&#x81F3;&#x524D;&#x7AEF;&#xFF0C;&#x89E3;&#x51B3;&#x6570;&#x636E;&#x7CBE;&#x5EA6;&#x4E22;&#x5931;&#x95EE;&#x9898;"><a href="#&#x5728;&#x6570;&#x636E;&#x5E93;&#x4F7F;&#x7528;&#x96EA;&#x82B1;&#x7B97;&#x6CD5;&#x7684;id&#x65F6;&#xFF0C;&#x540E;&#x7AEF;&#x5411;&#x524D;&#x7AEF;&#x8F6C;&#x6362;json&#x6570;&#x636E;&#x7684;id&#xFF0C;&#x7CBE;&#x5EA6;&#x4E22;&#x5931;&#xFF0C;&#x6240;&#x4EE5;&#x540E;&#x7AEF;&#x4F7F;&#x7528;&#x5BF9;&#x8C61;&#x6620;&#x5C04;&#x5668;&#x5C06;Long&#x578B;&#x6570;&#x636E;&#x76F4;&#x63A5;&#x8F6C;&#x6362;&#x4E3A;String&#x4F20;&#x81F3;&#x524D;&#x7AEF;&#xFF0C;&#x89E3;&#x51B3;&#x6570;&#x636E;&#x7CBE;&#x5EA6;&#x4E22;&#x5931;&#x95EE;&#x9898;" class="headerlink" title="&#x5728;&#x6570;&#x636E;&#x5E93;&#x4F7F;&#x7528;&#x96EA;&#x82B1;&#x7B97;&#x6CD5;&#x7684;id&#x65F6;&#xFF0C;&#x540E;&#x7AEF;&#x5411;&#x524D;&#x7AEF;&#x8F6C;&#x6362;json&#x6570;&#x636E;&#x7684;id&#xFF0C;&#x7CBE;&#x5EA6;&#x4E22;&#x5931;&#xFF0C;&#x6240;&#x4EE5;&#x540E;&#x7AEF;&#x4F7F;&#x7528;&#x5BF9;&#x8C61;&#x6620;&#x5C04;&#x5668;&#x5C06;Long&#x578B;&#x6570;&#x636E;&#x76F4;&#x63A5;&#x8F6C;&#x6362;&#x4E3A;String&#x4F20;&#x81F3;&#x524D;&#x7AEF;&#xFF0C;&#x89E3;&#x51B3;&#x6570;&#x636E;&#x7CBE;&#x5EA6;&#x4E22;&#x5931;&#x95EE;&#x9898;"></a>&#x5728;&#x6570;&#x636E;&#x5E93;&#x4F7F;&#x7528;&#x96EA;&#x82B1;&#x7B97;&#x6CD5;&#x7684;id&#x65F6;&#xFF0C;&#x540E;&#x7AEF;&#x5411;&#x524D;&#x7AEF;&#x8F6C;&#x6362;json&#x6570;&#x636E;&#x7684;id&#xFF0C;&#x7CBE;&#x5EA6;&#x4E22;&#x5931;&#xFF0C;&#x6240;&#x4EE5;&#x540E;&#x7AEF;&#x4F7F;&#x7528;&#x5BF9;&#x8C61;&#x6620;&#x5C04;&#x5668;&#x5C06;Long&#x578B;&#x6570;&#x636E;&#x76F4;&#x63A5;&#x8F6C;&#x6362;&#x4E3A;String&#x4F20;&#x81F3;&#x524D;&#x7AEF;&#xFF0C;&#x89E3;&#x51B3;&#x6570;&#x636E;&#x7CBE;&#x5EA6;&#x4E22;&#x5931;&#x95EE;&#x9898;</h2><h4 id="JacksonObjectMapper-java&#x7C7B;"><a href="#JacksonObjectMapper-java&#x7C7B;" class="headerlink" title="JacksonObjectMapper.java&#x7C7B;"></a>JacksonObjectMapper.java&#x7C7B;</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> com.fasterxml.jackson.databind.DeserializationFeature;</span><br><span class="line"><span class="keyword">import</span> com.fasterxml.jackson.databind.ObjectMapper;</span><br><span class="line"><span class="keyword">import</span> com.fasterxml.jackson.databind.<span class="keyword">module</span>.SimpleModule;</span><br><span class="line"><span class="keyword">import</span> com.fasterxml.jackson.databind.ser.std.ToStringSerializer;</span><br><span class="line"><span class="keyword">import</span> com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;</span><br><span class="line"><span class="keyword">import</span> com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;</span><br><span class="line"><span class="keyword">import</span> com.fasterxml.jackson.datatype.jsr310.deser.LocalTimeDeserializer;</span><br><span class="line"><span class="keyword">import</span> com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;</span><br><span class="line"><span class="keyword">import</span> com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;</span><br><span class="line"><span class="keyword">import</span> com.fasterxml.jackson.datatype.jsr310.ser.LocalTimeSerializer;</span><br><span class="line"><span class="keyword">import</span> java.math.BigInteger;</span><br><span class="line"><span class="keyword">import</span> java.time.LocalDate;</span><br><span class="line"><span class="keyword">import</span> java.time.LocalDateTime;</span><br><span class="line"><span class="keyword">import</span> java.time.LocalTime;</span><br><span class="line"><span class="keyword">import</span> java.time.format.DateTimeFormatter;</span><br><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> com.fasterxml.jackson.databind.DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * &#x5BF9;&#x8C61;&#x6620;&#x5C04;&#x5668;:&#x57FA;&#x4E8E;jackson&#x5C06;Java&#x5BF9;&#x8C61;&#x8F6C;&#x4E3A;json&#xFF0C;&#x6216;&#x8005;&#x5C06;json&#x8F6C;&#x4E3A;Java&#x5BF9;&#x8C61;</span></span><br><span class="line"><span class="comment"> * &#x5C06;JSON&#x89E3;&#x6790;&#x4E3A;Java&#x5BF9;&#x8C61;&#x7684;&#x8FC7;&#x7A0B;&#x79F0;&#x4E3A; [&#x4ECE;JSON&#x53CD;&#x5E8F;&#x5217;&#x5316;Java&#x5BF9;&#x8C61;]</span></span><br><span class="line"><span class="comment"> * &#x4ECE;Java&#x5BF9;&#x8C61;&#x751F;&#x6210;JSON&#x7684;&#x8FC7;&#x7A0B;&#x79F0;&#x4E3A; [&#x5E8F;&#x5217;&#x5316;Java&#x5BF9;&#x8C61;&#x5230;JSON]</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">JacksonObjectMapper</span> <span class="keyword">extends</span> <span class="title class_">ObjectMapper</span> {</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">String</span> <span class="variable">DEFAULT_DATE_FORMAT</span> <span class="operator">=</span> <span class="string">&quot;yyyy-MM-dd&quot;</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">String</span> <span class="variable">DEFAULT_DATE_TIME_FORMAT</span> <span class="operator">=</span> <span class="string">&quot;yyyy-MM-dd HH:mm:ss&quot;</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">String</span> <span class="variable">DEFAULT_TIME_FORMAT</span> <span class="operator">=</span> <span class="string">&quot;HH:mm:ss&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">JacksonObjectMapper</span><span class="params">()</span> {</span><br><span class="line">        <span class="built_in">super</span>();</span><br><span class="line">        <span class="comment">//&#x6536;&#x5230;&#x672A;&#x77E5;&#x5C5E;&#x6027;&#x65F6;&#x4E0D;&#x62A5;&#x5F02;&#x5E38;</span></span><br><span class="line">        <span class="built_in">this</span>.configure(FAIL_ON_UNKNOWN_PROPERTIES, <span class="literal">false</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//&#x53CD;&#x5E8F;&#x5217;&#x5316;&#x65F6;&#xFF0C;&#x5C5E;&#x6027;&#x4E0D;&#x5B58;&#x5728;&#x7684;&#x517C;&#x5BB9;&#x5904;&#x7406;</span></span><br><span class="line">        <span class="built_in">this</span>.getDeserializationConfig().withoutFeatures(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="type">SimpleModule</span> <span class="variable">simpleModule</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">SimpleModule</span>()</span><br><span class="line">                .addDeserializer(LocalDateTime.class, <span class="keyword">new</span> <span class="title class_">LocalDateTimeDeserializer</span>(DateTimeFormatter.ofPattern(DEFAULT_DATE_TIME_FORMAT)))</span><br><span class="line">                .addDeserializer(LocalDate.class, <span class="keyword">new</span> <span class="title class_">LocalDateDeserializer</span>(DateTimeFormatter.ofPattern(DEFAULT_DATE_FORMAT)))</span><br><span class="line">                .addDeserializer(LocalTime.class, <span class="keyword">new</span> <span class="title class_">LocalTimeDeserializer</span>(DateTimeFormatter.ofPattern(DEFAULT_TIME_FORMAT)))</span><br><span class="line"></span><br><span class="line">                .addSerializer(BigInteger.class, ToStringSerializer.instance)</span><br><span class="line">                .addSerializer(Long.class, ToStringSerializer.instance)</span><br><span class="line">                .addSerializer(LocalDateTime.class, <span class="keyword">new</span> <span class="title class_">LocalDateTimeSerializer</span>(DateTimeFormatter.ofPattern(DEFAULT_DATE_TIME_FORMAT)))</span><br><span class="line">                .addSerializer(LocalDate.class, <span class="keyword">new</span> <span class="title class_">LocalDateSerializer</span>(DateTimeFormatter.ofPattern(DEFAULT_DATE_FORMAT)))</span><br><span class="line">                .addSerializer(LocalTime.class, <span class="keyword">new</span> <span class="title class_">LocalTimeSerializer</span>(DateTimeFormatter.ofPattern(DEFAULT_TIME_FORMAT)));</span><br><span class="line"></span><br><span class="line">        <span class="comment">//&#x6CE8;&#x518C;&#x529F;&#x80FD;&#x6A21;&#x5757; &#x4F8B;&#x5982;&#xFF0C;&#x53EF;&#x4EE5;&#x6DFB;&#x52A0;&#x81EA;&#x5B9A;&#x4E49;&#x5E8F;&#x5217;&#x5316;&#x5668;&#x548C;&#x53CD;&#x5E8F;&#x5217;&#x5316;&#x5668;</span></span><br><span class="line">        <span class="built_in">this</span>.registerModule(simpleModule);</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="&#x5728;WebConfig&#x4E2D;&#x914D;&#x7F6E;&#x6269;&#x5C55;mvc&#x7684;&#x6D88;&#x606F;&#x8F6C;&#x6362;&#x5668;"><a href="#&#x5728;WebConfig&#x4E2D;&#x914D;&#x7F6E;&#x6269;&#x5C55;mvc&#x7684;&#x6D88;&#x606F;&#x8F6C;&#x6362;&#x5668;" class="headerlink" title="&#x5728;WebConfig&#x4E2D;&#x914D;&#x7F6E;&#x6269;&#x5C55;mvc&#x7684;&#x6D88;&#x606F;&#x8F6C;&#x6362;&#x5668;"></a>&#x5728;WebConfig&#x4E2D;&#x914D;&#x7F6E;&#x6269;&#x5C55;mvc&#x7684;&#x6D88;&#x606F;&#x8F6C;&#x6362;&#x5668;</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * &#x6269;&#x5C55;mvc&#x6846;&#x67B6;&#x7684;&#x6D88;&#x606F;&#x6293;&#x6362;&#x5668;</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> converters</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">extendMessageConverters</span><span class="params">(List&lt;HttpMessageConverter&lt;?&gt;&gt; converters)</span> {</span><br><span class="line">    <span class="comment">// &#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x65B0;&#x7684;&#x6D88;&#x606F;&#x8F6C;&#x6362;&#x5668;&#x5BF9;&#x8C61;</span></span><br><span class="line">    <span class="type">MappingJackson2HttpMessageConverter</span> <span class="variable">messageConverter</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">MappingJackson2HttpMessageConverter</span>();</span><br><span class="line">    <span class="comment">// &#x8BBE;&#x7F6E;&#x5BF9;&#x8C61;&#x8F6C;&#x6362;&#x5668;&#xFF0C;&#x5E95;&#x5C42;&#x4F7F;&#x7528;Jackson&#x5C06;java&#x5BF9;&#x8C61;&#x8F6C;&#x4E3A;json</span></span><br><span class="line">    messageConverter.setObjectMapper(<span class="keyword">new</span> <span class="title class_">JacksonObjectMapper</span>());</span><br><span class="line">    <span class="comment">//&#x5C06;&#x4E0A;&#x9762;&#x7684;&#x6D88;&#x606F;&#x8F6C;&#x5316;&#x5668;&#x5BF9;&#x8C61;&#x8FFD;&#x52A0;&#x5230;mvc&#x6846;&#x67B6;&#x7684;&#x8F6C;&#x6362;&#x5668;&#x4E2D;&#xFF0C;&#x4E0B;&#x6807;&#x8BBE;&#x7F6E;&#x4E3A;0&#x4FDD;&#x8BC1;&#x8F6C;&#x6362;&#x5668;&#x7684;&#x4F18;&#x5148;&#x5EA6;</span></span><br><span class="line">    converters.add(<span class="number">0</span>,messageConverter);</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+
+<h2 id="&#x95EE;&#x9898;&#x89E3;&#x51B3;"><a href="#&#x95EE;&#x9898;&#x89E3;&#x51B3;" class="headerlink" title="&#x95EE;&#x9898;&#x89E3;&#x51B3;"></a>&#x95EE;&#x9898;&#x89E3;&#x51B3;</h2></article><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%90%8E%E7%AB%AF/">后端</a></div><div class="post_share"></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2024/05/11/nginx-cfg/" title="使用nginx实现负载均衡"><img class="cover" src="https://img2.imgtp.com/2024/05/11/9WjWrGVs.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">使用nginx实现负载均衡</div></div></a></div><div class="next-post pull-right"><a href="/2023/02/05/mybatis-plus/" title="mybatis_plus"><img class="cover" src="https://image-bed-vz.oss-cn-hangzhou.aliyuncs.com/MyBatis-Plus/relationship-with-mybatis.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">mybatis_plus</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9C%A8%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BD%BF%E7%94%A8%E9%9B%AA%E8%8A%B1%E7%AE%97%E6%B3%95%E7%9A%84id%E6%97%B6%EF%BC%8C%E5%90%8E%E7%AB%AF%E5%90%91%E5%89%8D%E7%AB%AF%E8%BD%AC%E6%8D%A2json%E6%95%B0%E6%8D%AE%E7%9A%84id%EF%BC%8C%E7%B2%BE%E5%BA%A6%E4%B8%A2%E5%A4%B1%EF%BC%8C%E6%89%80%E4%BB%A5%E5%90%8E%E7%AB%AF%E4%BD%BF%E7%94%A8%E5%AF%B9%E8%B1%A1%E6%98%A0%E5%B0%84%E5%99%A8%E5%B0%86Long%E5%9E%8B%E6%95%B0%E6%8D%AE%E7%9B%B4%E6%8E%A5%E8%BD%AC%E6%8D%A2%E4%B8%BAString%E4%BC%A0%E8%87%B3%E5%89%8D%E7%AB%AF%EF%BC%8C%E8%A7%A3%E5%86%B3%E6%95%B0%E6%8D%AE%E7%B2%BE%E5%BA%A6%E4%B8%A2%E5%A4%B1%E9%97%AE%E9%A2%98"><span class="toc-number">1.</span> <span class="toc-text">在数据库使用雪花算法的id时，后端向前端转换json数据的id，精度丢失，所以后端使用对象映射器将Long型数据直接转换为String传至前端，解决数据精度丢失问题</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#JacksonObjectMapper-java%E7%B1%BB"><span class="toc-number">1.0.1.</span> <span class="toc-text">JacksonObjectMapper.java类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9C%A8WebConfig%E4%B8%AD%E9%85%8D%E7%BD%AE%E6%89%A9%E5%B1%95mvc%E7%9A%84%E6%B6%88%E6%81%AF%E8%BD%AC%E6%8D%A2%E5%99%A8"><span class="toc-number">1.0.2.</span> <span class="toc-text">在WebConfig中配置扩展mvc的消息转换器</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3"><span class="toc-number">2.</span> <span class="toc-text">问题解决</span></a></li></ol></div></div></div></div></main><!--if (footerBg) if (footerBg === true)
+   - var footer_bg = bg_img
+ else
+   - var footer_bg = isImgOrUrl(theme.footer_bg) ? `background-image: url('${url_for(footerBg)}')` : `background: ${footerBg}`
+else
+  - var footer_bg = ''
+--><footer id="footer" style="background-color: transparent;"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2025 By Ren</div><div class="framework-info"><span>2023 </span><a target="_blank" rel="noopener" href="https://github.com/machsh64">Ren</a><span class="footer-separator">|</span><span> PASSIONE</span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"></div><script src="/ren/random.js"></script><script src="/js/essayjs.js"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener scroll 
+  window.tocScrollFn && window.removeEventListener('scroll', window.tocScrollFn)
+  window.scrollCollect && window.removeEventListener('scroll', scrollCollect)
+
+  document.getElementById('rightside').style.cssText = "opacity: ''; transform: ''"
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+  typeof disqusjs === 'object' && disqusjs.destroy()
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', (e) => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

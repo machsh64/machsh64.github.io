@@ -1,0 +1,253 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"><title>使用jwt进行用户登录验证 | Ren |life</title><meta name="author" content="Ren"><meta name="copyright" content="Ren"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="在springboot项目中使用jwt做用户登录验证">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用jwt进行用户登录验证">
+<meta property="og:url" content="https://machsh64.github.io/2024/05/18/jwt/index.html">
+<meta property="og:site_name" content="Ren |life">
+<meta property="og:description" content="在springboot项目中使用jwt做用户登录验证">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img2.imgtp.com/2024/05/18/xoy9otbe.jpg">
+<meta property="article:published_time" content="2024-05-18T15:00:43.000Z">
+<meta property="article:modified_time" content="2024-05-18T15:24:52.000Z">
+<meta property="article:author" content="Ren">
+<meta property="article:tag" content="后端">
+<meta property="article:tag" content="Java">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img2.imgtp.com/2024/05/18/xoy9otbe.jpg"><link rel="shortcut icon" href="/img/favicon.ico"><link rel="canonical" href="https://machsh64.github.io/2024/05/18/jwt/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":null},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '使用jwt进行用户登录验证',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: undefined,
+  isToc: true,
+  postUpdate: '2024-05-18 23:24:52'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = url => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      link.onload = () => resolve()
+      link.onerror = () => reject()
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/mycss.css"><link rel="stylesheet" href="/css/myhometop.css"><link rel="stylesheet" href="/css/essaycss.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/js-heo@1.0.11/bb/showbb_in_index.css"><script src="https://cdn.staticaly.com/gh/haonan15/CDN@main/source/waterfall.min.js"></script><!-- hexo injector head_end start --><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-double-row-display@1.00/cardlistpost.min.css"/>
+<style>#recent-posts > .recent-post-item >.recent-post-info > .article-meta-wrap > .tags:before {content:"\A";
+  white-space: pre;}#recent-posts > .recent-post-item >.recent-post-info > .article-meta-wrap > .tags > .article-meta__separator{display:none}</style>
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js/themes/blue/pace-theme-minimal.min.css"/><script src="https://cdn.jsdelivr.net/npm/pace-js/pace.min.js"></script><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/author.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">22</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">10</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">9</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/essay/"><span> Essay</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><span> About ME</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="Ren |life"><span class="site-name">Ren |life</span></a></span><div id="menus"></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/essay/"><span> Essay</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><span> About ME</span></a></div></div><div id="nav-right"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i></a></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">使用jwt进行用户登录验证</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-05-18T15:00:43.000Z" title="发表于 2024-05-18 23:00:43">2024-05-18</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-05-18T15:24:52.000Z" title="更新于 2024-05-18 23:24:52">2024-05-18</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Java/">Java</a></span></div><div class="meta-secondline"></div></div></div><article class="post-content" id="article-container"><h3 id="&#x4E00;-&#x8981;&#x4F7F;&#x7528;JWT&#x505A;&#x7528;&#x6237;&#x767B;&#x5F55;&#x9A8C;&#x8BC1;-&#x9996;&#x5148;&#x8981;&#x5F15;&#x5165;-JwtUtil&#x5DE5;&#x5177;&#x7C7B;-&#x5176;&#x4E2D;&#x5305;&#x542B;&#x4E86;&#x751F;&#x6210;jwt&#x4E0E;&#x89E3;&#x5BC6;jwt&#x7684;&#x51FD;&#x6570;"><a href="#&#x4E00;-&#x8981;&#x4F7F;&#x7528;JWT&#x505A;&#x7528;&#x6237;&#x767B;&#x5F55;&#x9A8C;&#x8BC1;-&#x9996;&#x5148;&#x8981;&#x5F15;&#x5165;-JwtUtil&#x5DE5;&#x5177;&#x7C7B;-&#x5176;&#x4E2D;&#x5305;&#x542B;&#x4E86;&#x751F;&#x6210;jwt&#x4E0E;&#x89E3;&#x5BC6;jwt&#x7684;&#x51FD;&#x6570;" class="headerlink" title="&#x4E00; &#x8981;&#x4F7F;&#x7528;JWT&#x505A;&#x7528;&#x6237;&#x767B;&#x5F55;&#x9A8C;&#x8BC1;, &#x9996;&#x5148;&#x8981;&#x5F15;&#x5165; JwtUtil&#x5DE5;&#x5177;&#x7C7B;, &#x5176;&#x4E2D;&#x5305;&#x542B;&#x4E86;&#x751F;&#x6210;jwt&#x4E0E;&#x89E3;&#x5BC6;jwt&#x7684;&#x51FD;&#x6570;"></a>&#x4E00; &#x8981;&#x4F7F;&#x7528;JWT&#x505A;&#x7528;&#x6237;&#x767B;&#x5F55;&#x9A8C;&#x8BC1;, &#x9996;&#x5148;&#x8981;&#x5F15;&#x5165; JwtUtil&#x5DE5;&#x5177;&#x7C7B;, &#x5176;&#x4E2D;&#x5305;&#x542B;&#x4E86;&#x751F;&#x6210;jwt&#x4E0E;&#x89E3;&#x5BC6;jwt&#x7684;&#x51FD;&#x6570;</h3><p>```java utils.JwtUtil &#x4E2D;</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">JwtUtil</span> {</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * &#x751F;&#x6210;jwt</span></span><br><span class="line"><span class="comment">     * &#x4F7F;&#x7528;Hs256&#x7B97;&#x6CD5;, &#x79C1;&#x5319;&#x4F7F;&#x7528;&#x56FA;&#x5B9A;&#x79D8;&#x94A5;</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> secretKey jwt&#x79D8;&#x94A5;</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> ttlMillis jwt&#x8FC7;&#x671F;&#x65F6;&#x95F4;(&#x6BEB;&#x79D2;)</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> claims    &#x8BBE;&#x7F6E;&#x7684;&#x4FE1;&#x606F;</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> String <span class="title function_">createJWT</span><span class="params">(String secretKey, <span class="type">long</span> ttlMillis, Map&lt;String, Object&gt; claims)</span> {</span><br><span class="line">        <span class="comment">// &#x6307;&#x5B9A;&#x7B7E;&#x540D;&#x7684;&#x65F6;&#x5019;&#x4F7F;&#x7528;&#x7684;&#x7B7E;&#x540D;&#x7B97;&#x6CD5;&#xFF0C;&#x4E5F;&#x5C31;&#x662F;header&#x90A3;&#x90E8;&#x5206;</span></span><br><span class="line">        <span class="type">SignatureAlgorithm</span> <span class="variable">signatureAlgorithm</span> <span class="operator">=</span> SignatureAlgorithm.HS256;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// &#x751F;&#x6210;JWT&#x7684;&#x65F6;&#x95F4;</span></span><br><span class="line">        <span class="type">long</span> <span class="variable">expMillis</span> <span class="operator">=</span> System.currentTimeMillis() + ttlMillis;</span><br><span class="line">        <span class="type">Date</span> <span class="variable">exp</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Date</span>(expMillis);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// &#x8BBE;&#x7F6E;jwt&#x7684;body</span></span><br><span class="line">        <span class="type">JwtBuilder</span> <span class="variable">builder</span> <span class="operator">=</span> Jwts.builder()</span><br><span class="line">                <span class="comment">// &#x5982;&#x679C;&#x6709;&#x79C1;&#x6709;&#x58F0;&#x660E;&#xFF0C;&#x4E00;&#x5B9A;&#x8981;&#x5148;&#x8BBE;&#x7F6E;&#x8FD9;&#x4E2A;&#x81EA;&#x5DF1;&#x521B;&#x5EFA;&#x7684;&#x79C1;&#x6709;&#x7684;&#x58F0;&#x660E;&#xFF0C;&#x8FD9;&#x4E2A;&#x662F;&#x7ED9;builder&#x7684;claim&#x8D4B;&#x503C;&#xFF0C;&#x4E00;&#x65E6;&#x5199;&#x5728;&#x6807;&#x51C6;&#x7684;&#x58F0;&#x660E;&#x8D4B;&#x503C;&#x4E4B;&#x540E;&#xFF0C;&#x5C31;&#x662F;&#x8986;&#x76D6;&#x4E86;&#x90A3;&#x4E9B;&#x6807;&#x51C6;&#x7684;&#x58F0;&#x660E;&#x7684;</span></span><br><span class="line">                .setClaims(claims)</span><br><span class="line">                <span class="comment">// &#x8BBE;&#x7F6E;&#x7B7E;&#x540D;&#x4F7F;&#x7528;&#x7684;&#x7B7E;&#x540D;&#x7B97;&#x6CD5;&#x548C;&#x7B7E;&#x540D;&#x4F7F;&#x7528;&#x7684;&#x79D8;&#x94A5;</span></span><br><span class="line">                .signWith(signatureAlgorithm, secretKey.getBytes(StandardCharsets.UTF_8))</span><br><span class="line">                <span class="comment">// &#x8BBE;&#x7F6E;&#x8FC7;&#x671F;&#x65F6;&#x95F4;</span></span><br><span class="line">                .setExpiration(exp);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> builder.compact();</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Token&#x89E3;&#x5BC6;</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> secretKey jwt&#x79D8;&#x94A5; &#x6B64;&#x79D8;&#x94A5;&#x4E00;&#x5B9A;&#x8981;&#x4FDD;&#x7559;&#x597D;&#x5728;&#x670D;&#x52A1;&#x7AEF;, &#x4E0D;&#x80FD;&#x66B4;&#x9732;&#x51FA;&#x53BB;, &#x5426;&#x5219;sign&#x5C31;&#x53EF;&#x4EE5;&#x88AB;&#x4F2A;&#x9020;, &#x5982;&#x679C;&#x5BF9;&#x63A5;&#x591A;&#x4E2A;&#x5BA2;&#x6237;&#x7AEF;&#x5EFA;&#x8BAE;&#x6539;&#x9020;&#x6210;&#x591A;&#x4E2A;</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> token     &#x52A0;&#x5BC6;&#x540E;&#x7684;token</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> Claims <span class="title function_">parseJWT</span><span class="params">(String secretKey, String token)</span> {</span><br><span class="line">        <span class="comment">// &#x5F97;&#x5230;DefaultJwtParser</span></span><br><span class="line">        <span class="type">Claims</span> <span class="variable">claims</span> <span class="operator">=</span> Jwts.parser()</span><br><span class="line">                <span class="comment">// &#x8BBE;&#x7F6E;&#x7B7E;&#x540D;&#x7684;&#x79D8;&#x94A5;</span></span><br><span class="line">                .setSigningKey(secretKey.getBytes(StandardCharsets.UTF_8))</span><br><span class="line">                <span class="comment">// &#x8BBE;&#x7F6E;&#x9700;&#x8981;&#x89E3;&#x6790;&#x7684;jwt</span></span><br><span class="line">                .parseClaimsJws(token).getBody();</span><br><span class="line">        <span class="keyword">return</span> claims;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">}</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="&#x4E8C;-&#x5728;application&#x4E2D;&#x5148;&#x5BF9;jwt&#x6240;&#x9700;&#x7684;&#x53C2;&#x6570;&#x8FDB;&#x884C;&#x8BBE;&#x7F6E;-&#x7136;&#x540E;&#x901A;&#x8FC7;&#x6CE8;&#x5165;&#x7684;&#x65B9;&#x5F0F;&#x8D4B;&#x503C;&#x7ED9;&#x5B9E;&#x4F53;&#x7C7B;JwtProperties-java-&#x4EE5;&#x4F9B;&#x540E;&#x671F;&#x4F7F;&#x7528;"><a href="#&#x4E8C;-&#x5728;application&#x4E2D;&#x5148;&#x5BF9;jwt&#x6240;&#x9700;&#x7684;&#x53C2;&#x6570;&#x8FDB;&#x884C;&#x8BBE;&#x7F6E;-&#x7136;&#x540E;&#x901A;&#x8FC7;&#x6CE8;&#x5165;&#x7684;&#x65B9;&#x5F0F;&#x8D4B;&#x503C;&#x7ED9;&#x5B9E;&#x4F53;&#x7C7B;JwtProperties-java-&#x4EE5;&#x4F9B;&#x540E;&#x671F;&#x4F7F;&#x7528;" class="headerlink" title="&#x4E8C; &#x5728;application&#x4E2D;&#x5148;&#x5BF9;jwt&#x6240;&#x9700;&#x7684;&#x53C2;&#x6570;&#x8FDB;&#x884C;&#x8BBE;&#x7F6E;, &#x7136;&#x540E;&#x901A;&#x8FC7;&#x6CE8;&#x5165;&#x7684;&#x65B9;&#x5F0F;&#x8D4B;&#x503C;&#x7ED9;&#x5B9E;&#x4F53;&#x7C7B;JwtProperties.java, &#x4EE5;&#x4F9B;&#x540E;&#x671F;&#x4F7F;&#x7528;"></a>&#x4E8C; &#x5728;application&#x4E2D;&#x5148;&#x5BF9;jwt&#x6240;&#x9700;&#x7684;&#x53C2;&#x6570;&#x8FDB;&#x884C;&#x8BBE;&#x7F6E;, &#x7136;&#x540E;&#x901A;&#x8FC7;&#x6CE8;&#x5165;&#x7684;&#x65B9;&#x5F0F;&#x8D4B;&#x503C;&#x7ED9;&#x5B9E;&#x4F53;&#x7C7B;JwtProperties.java, &#x4EE5;&#x4F9B;&#x540E;&#x671F;&#x4F7F;&#x7528;</h3><p>```yml application.yml &#x4E2D;</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">work:</span></span><br><span class="line">  <span class="attr">jwt:</span></span><br><span class="line">    <span class="comment"># &#x8BBE;&#x7F6E;jwt&#x7B7E;&#x540D;&#x52A0;&#x5BC6;&#x65F6;&#x4F7F;&#x7528;&#x7684;&#x79D8;&#x94A5; </span></span><br><span class="line">    <span class="attr">admin-secret-key:</span> <span class="string">itcast</span>   </span><br><span class="line">    <span class="comment"># &#x8BBE;&#x7F6E;jwt&#x8FC7;&#x671F;&#x65F6;&#x95F4;</span></span><br><span class="line">    <span class="attr">admin-ttl:</span> <span class="number">7200000</span></span><br><span class="line">    <span class="comment"># &#x8BBE;&#x7F6E;&#x524D;&#x7AEF;&#x4F20;&#x9012;&#x8FC7;&#x6765;&#x7684;&#x4EE4;&#x724C;&#x540D;&#x79F0;</span></span><br><span class="line">    <span class="attr">admin-token-name:</span> <span class="string">token</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>```java properties.JwtProperties.java &#x4E2D;</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="meta">@ConfigurationProperties(prefix = &quot;work.jwt&quot;)</span></span><br><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">JwtProperties</span> {</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * &#x7BA1;&#x7406;&#x7AEF;&#x5458;&#x5DE5;&#x751F;&#x6210;jwt&#x4EE4;&#x724C;&#x76F8;&#x5173;&#x914D;&#x7F6E;</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> String adminSecretKey;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">long</span> adminTtl;</span><br><span class="line">    <span class="keyword">private</span> String adminTokenName;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * &#x7528;&#x6237;&#x7AEF;&#x5FAE;&#x4FE1;&#x7528;&#x6237;&#x751F;&#x6210;jwt&#x4EE4;&#x724C;&#x76F8;&#x5173;&#x914D;&#x7F6E;</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> String userSecretKey;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">long</span> userTtl;</span><br><span class="line">    <span class="keyword">private</span> String userTokenName;</span><br><span class="line"></span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+
+<h3 id="&#x4E09;-&#x521B;&#x5EFA;JwtTokenadminInterceptor&#x62E6;&#x622A;&#x5668;-&#x968F;&#x540E;&#x5C06;&#x5176;&#x52A0;&#x5165;&#x914D;&#x7F6E;&#x6587;&#x4EF6;WebMvcConfiguration&#x4E2D;-&#x5B83;&#x53EF;&#x4EE5;&#x62E6;&#x622A;&#x6307;&#x5B9A;&#x7684;&#x8BF7;&#x6C42;&#x5934;&#x4ECE;&#x4E2D;&#x83B7;&#x53D6;&#x5230;token"><a href="#&#x4E09;-&#x521B;&#x5EFA;JwtTokenadminInterceptor&#x62E6;&#x622A;&#x5668;-&#x968F;&#x540E;&#x5C06;&#x5176;&#x52A0;&#x5165;&#x914D;&#x7F6E;&#x6587;&#x4EF6;WebMvcConfiguration&#x4E2D;-&#x5B83;&#x53EF;&#x4EE5;&#x62E6;&#x622A;&#x6307;&#x5B9A;&#x7684;&#x8BF7;&#x6C42;&#x5934;&#x4ECE;&#x4E2D;&#x83B7;&#x53D6;&#x5230;token" class="headerlink" title="&#x4E09; &#x521B;&#x5EFA;JwtTokenadminInterceptor&#x62E6;&#x622A;&#x5668;, &#x968F;&#x540E;&#x5C06;&#x5176;&#x52A0;&#x5165;&#x914D;&#x7F6E;&#x6587;&#x4EF6;WebMvcConfiguration&#x4E2D;,&#x5B83;&#x53EF;&#x4EE5;&#x62E6;&#x622A;&#x6307;&#x5B9A;&#x7684;&#x8BF7;&#x6C42;&#x5934;&#x4ECE;&#x4E2D;&#x83B7;&#x53D6;&#x5230;token"></a>&#x4E09; &#x521B;&#x5EFA;JwtTokenadminInterceptor&#x62E6;&#x622A;&#x5668;, &#x968F;&#x540E;&#x5C06;&#x5176;&#x52A0;&#x5165;&#x914D;&#x7F6E;&#x6587;&#x4EF6;WebMvcConfiguration&#x4E2D;,&#x5B83;&#x53EF;&#x4EE5;&#x62E6;&#x622A;&#x6307;&#x5B9A;&#x7684;&#x8BF7;&#x6C42;&#x5934;&#x4ECE;&#x4E2D;&#x83B7;&#x53D6;&#x5230;token</h3><p>```java interceptor.JwtTokenAdminInterceptor.java &#x4E2D;</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="meta">@Slf4j</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">JwtTokenAdminInterceptor</span> <span class="keyword">implements</span> <span class="title class_">HandlerInterceptor</span> {</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> JwtProperties jwtProperties;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * &#x6821;&#x9A8C;jwt</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> request</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> response</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> handler</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     * <span class="doctag">@throws</span> Exception</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">preHandle</span><span class="params">(HttpServletRequest request, HttpServletResponse response, Object handler)</span> <span class="keyword">throws</span> Exception {</span><br><span class="line">        <span class="comment">//&#x5224;&#x65AD;&#x5F53;&#x524D;&#x62E6;&#x622A;&#x5230;&#x7684;&#x662F;Controller&#x7684;&#x65B9;&#x6CD5;&#x8FD8;&#x662F;&#x5176;&#x4ED6;&#x8D44;&#x6E90;</span></span><br><span class="line">        <span class="keyword">if</span> (!(handler <span class="keyword">instanceof</span> HandlerMethod)) {</span><br><span class="line">            <span class="comment">//&#x5F53;&#x524D;&#x62E6;&#x622A;&#x5230;&#x7684;&#x4E0D;&#x662F;&#x52A8;&#x6001;&#x65B9;&#x6CD5;&#xFF0C;&#x76F4;&#x63A5;&#x653E;&#x884C;</span></span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        <span class="comment">//1&#x3001;&#x4ECE;&#x8BF7;&#x6C42;&#x5934;&#x4E2D;&#x83B7;&#x53D6;&#x4EE4;&#x724C;</span></span><br><span class="line">        <span class="type">String</span> <span class="variable">token</span> <span class="operator">=</span> request.getHeader(jwtProperties.getAdminTokenName());</span><br><span class="line"></span><br><span class="line">        <span class="comment">//2&#x3001;&#x6821;&#x9A8C;&#x4EE4;&#x724C;</span></span><br><span class="line">        <span class="keyword">try</span> {</span><br><span class="line">            log.info(<span class="string">&quot;jwt&#x6821;&#x9A8C;:{}&quot;</span>, token);</span><br><span class="line">            <span class="type">Claims</span> <span class="variable">claims</span> <span class="operator">=</span> JwtUtil.parseJWT(jwtProperties.getAdminSecretKey(), token);</span><br><span class="line">            <span class="type">Long</span> <span class="variable">empId</span> <span class="operator">=</span> Long.valueOf(claims.get(JwtClaimsConstant.EMP_ID).toString());</span><br><span class="line">            log.info(<span class="string">&quot;&#x5F53;&#x524D;&#x5458;&#x5DE5;id&#xFF1A;&quot;</span>, empId);</span><br><span class="line">            BaseContext.setCurrentId(empId);</span><br><span class="line">            <span class="comment">//3&#x3001;&#x901A;&#x8FC7;&#xFF0C;&#x653E;&#x884C;</span></span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        } <span class="keyword">catch</span> (Exception ex) {</span><br><span class="line">            <span class="comment">//4&#x3001;&#x4E0D;&#x901A;&#x8FC7;&#xFF0C;&#x54CD;&#x5E94;401&#x72B6;&#x6001;&#x7801;</span></span><br><span class="line">            response.setStatus(<span class="number">401</span>);</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+
+<p>```java WebMvcConfiguration.java &#x4E2D;</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * &#x6CE8;&#x518C;&#x81EA;&#x5B9A;&#x4E49;&#x62E6;&#x622A;&#x5668;</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> registry</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">addInterceptors</span><span class="params">(InterceptorRegistry registry)</span> {</span><br><span class="line">    log.info(<span class="string">&quot;&#x5F00;&#x59CB;&#x6CE8;&#x518C;&#x81EA;&#x5B9A;&#x4E49;&#x62E6;&#x622A;&#x5668;...&quot;</span>);</span><br><span class="line">    registry.addInterceptor(jwtTokenAdminInterceptor)</span><br><span class="line">            .addPathPatterns(<span class="string">&quot;/admin/**&quot;</span>)</span><br><span class="line">            .excludePathPatterns(<span class="string">&quot;/admin/employee/login&quot;</span>);</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+
+<h3 id="&#x56DB;-&#x73B0;&#x5728;&#x53EF;&#x4EE5;&#x5728;&#x767B;&#x5F55;&#x7684;&#x65B9;&#x6CD5;&#x4E2D;-&#x914D;&#x7F6E;&#x7B2C;&#x4E00;&#x6B21;&#x767B;&#x5F55;&#x65F6;&#x751F;&#x6210;jwt&#x7684;&#x65B9;&#x6CD5;"><a href="#&#x56DB;-&#x73B0;&#x5728;&#x53EF;&#x4EE5;&#x5728;&#x767B;&#x5F55;&#x7684;&#x65B9;&#x6CD5;&#x4E2D;-&#x914D;&#x7F6E;&#x7B2C;&#x4E00;&#x6B21;&#x767B;&#x5F55;&#x65F6;&#x751F;&#x6210;jwt&#x7684;&#x65B9;&#x6CD5;" class="headerlink" title="&#x56DB; &#x73B0;&#x5728;&#x53EF;&#x4EE5;&#x5728;&#x767B;&#x5F55;&#x7684;&#x65B9;&#x6CD5;&#x4E2D;,&#x914D;&#x7F6E;&#x7B2C;&#x4E00;&#x6B21;&#x767B;&#x5F55;&#x65F6;&#x751F;&#x6210;jwt&#x7684;&#x65B9;&#x6CD5;"></a>&#x56DB; &#x73B0;&#x5728;&#x53EF;&#x4EE5;&#x5728;&#x767B;&#x5F55;&#x7684;&#x65B9;&#x6CD5;&#x4E2D;,&#x914D;&#x7F6E;&#x7B2C;&#x4E00;&#x6B21;&#x767B;&#x5F55;&#x65F6;&#x751F;&#x6210;jwt&#x7684;&#x65B9;&#x6CD5;</h3><p>```java controller.loginController.java *login()&#x4E2D;</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="keyword">private</span> JwtProperties jwtProperties;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * &#x767B;&#x5F55;</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> employeeLoginDTO</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@PostMapping(&quot;/login&quot;)</span></span><br><span class="line"><span class="meta">@ApiOperation(&quot;&#x5458;&#x5DE5;&#x767B;&#x5F55;&quot;)</span></span><br><span class="line"><span class="keyword">public</span> Result&lt;EmployeeLoginVO&gt; <span class="title function_">login</span><span class="params">(<span class="meta">@RequestBody</span> EmployeeLoginDTO employeeLoginDTO)</span> {</span><br><span class="line">    log.info(<span class="string">&quot;&#x5458;&#x5DE5;&#x767B;&#x5F55;&#xFF1A;{}&quot;</span>, employeeLoginDTO);</span><br><span class="line"></span><br><span class="line">    <span class="type">Employee</span> <span class="variable">employee</span> <span class="operator">=</span> employeeService.login(employeeLoginDTO);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//&#x767B;&#x5F55;&#x6210;&#x529F;&#x540E;&#xFF0C;&#x751F;&#x6210;jwt&#x4EE4;&#x724C;</span></span><br><span class="line">    Map&lt;String, Object&gt; claims = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;&gt;();</span><br><span class="line">    claims.put(JwtClaimsConstant.EMP_ID, employee.getId());</span><br><span class="line">    <span class="type">String</span> <span class="variable">token</span> <span class="operator">=</span> JwtUtil.createJWT(</span><br><span class="line">            jwtProperties.getAdminSecretKey(),</span><br><span class="line">            jwtProperties.getAdminTtl(),</span><br><span class="line">            claims);</span><br><span class="line"></span><br><span class="line">    <span class="type">EmployeeLoginVO</span> <span class="variable">employeeLoginVO</span> <span class="operator">=</span> EmployeeLoginVO.builder()</span><br><span class="line">            .id(employee.getId())</span><br><span class="line">            .userName(employee.getUsername())</span><br><span class="line">            .name(employee.getName())</span><br><span class="line">            .token(token)</span><br><span class="line">            .build();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> Result.success(employeeLoginVO);</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+
+<h3 id="&#x5230;&#x6B64;-jwt&#x767B;&#x5F55;&#x68C0;&#x6D4B;&#x5B8C;&#x6210;-&#x540E;&#x7EED;&#x68C0;&#x67E5;jwt&#x4E1A;&#x52A1;&#x7531;&#x914D;&#x7F6E;&#x7C7B;&#x6587;&#x4EF6;&#x62E6;&#x622A;&#x8DEF;&#x5F84;&#x540E;-&#x7ECF;&#x8FC7;JwtTokenadminInterceptor&#x62E6;&#x622A;&#x5668;&#x68C0;&#x9A8C;&#x51B3;&#x5B9A;&#x662F;&#x5426;&#x653E;&#x884C;"><a href="#&#x5230;&#x6B64;-jwt&#x767B;&#x5F55;&#x68C0;&#x6D4B;&#x5B8C;&#x6210;-&#x540E;&#x7EED;&#x68C0;&#x67E5;jwt&#x4E1A;&#x52A1;&#x7531;&#x914D;&#x7F6E;&#x7C7B;&#x6587;&#x4EF6;&#x62E6;&#x622A;&#x8DEF;&#x5F84;&#x540E;-&#x7ECF;&#x8FC7;JwtTokenadminInterceptor&#x62E6;&#x622A;&#x5668;&#x68C0;&#x9A8C;&#x51B3;&#x5B9A;&#x662F;&#x5426;&#x653E;&#x884C;" class="headerlink" title="&#x5230;&#x6B64; jwt&#x767B;&#x5F55;&#x68C0;&#x6D4B;&#x5B8C;&#x6210;, &#x540E;&#x7EED;&#x68C0;&#x67E5;jwt&#x4E1A;&#x52A1;&#x7531;&#x914D;&#x7F6E;&#x7C7B;&#x6587;&#x4EF6;&#x62E6;&#x622A;&#x8DEF;&#x5F84;&#x540E;, &#x7ECF;&#x8FC7;JwtTokenadminInterceptor&#x62E6;&#x622A;&#x5668;&#x68C0;&#x9A8C;&#x51B3;&#x5B9A;&#x662F;&#x5426;&#x653E;&#x884C;"></a>&#x5230;&#x6B64; jwt&#x767B;&#x5F55;&#x68C0;&#x6D4B;&#x5B8C;&#x6210;, &#x540E;&#x7EED;&#x68C0;&#x67E5;jwt&#x4E1A;&#x52A1;&#x7531;&#x914D;&#x7F6E;&#x7C7B;&#x6587;&#x4EF6;&#x62E6;&#x622A;&#x8DEF;&#x5F84;&#x540E;, &#x7ECF;&#x8FC7;JwtTokenadminInterceptor&#x62E6;&#x622A;&#x5668;&#x68C0;&#x9A8C;&#x51B3;&#x5B9A;&#x662F;&#x5426;&#x653E;&#x884C;</h3></article><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%90%8E%E7%AB%AF/">后端</a><a class="post-meta__tags" href="/tags/Java/">Java</a></div><div class="post_share"></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2024/05/20/SpringCache/" title="在SpringBoot中使用SpringCache"><img class="cover" src="https://img2.imgtp.com/2024/05/20/RgbOOmCY.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">在SpringBoot中使用SpringCache</div></div></a></div><div class="next-post pull-right"><a href="/2024/05/13/AutoFill/" title="Mybatis下的公共字段自动填充"><img class="cover" src="https://img2.imgtp.com/2024/05/13/kOGiLsdr.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Mybatis下的公共字段自动填充</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80-%E8%A6%81%E4%BD%BF%E7%94%A8JWT%E5%81%9A%E7%94%A8%E6%88%B7%E7%99%BB%E5%BD%95%E9%AA%8C%E8%AF%81-%E9%A6%96%E5%85%88%E8%A6%81%E5%BC%95%E5%85%A5-JwtUtil%E5%B7%A5%E5%85%B7%E7%B1%BB-%E5%85%B6%E4%B8%AD%E5%8C%85%E5%90%AB%E4%BA%86%E7%94%9F%E6%88%90jwt%E4%B8%8E%E8%A7%A3%E5%AF%86jwt%E7%9A%84%E5%87%BD%E6%95%B0"><span class="toc-number">1.</span> <span class="toc-text">一 要使用JWT做用户登录验证, 首先要引入 JwtUtil工具类, 其中包含了生成jwt与解密jwt的函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C-%E5%9C%A8application%E4%B8%AD%E5%85%88%E5%AF%B9jwt%E6%89%80%E9%9C%80%E7%9A%84%E5%8F%82%E6%95%B0%E8%BF%9B%E8%A1%8C%E8%AE%BE%E7%BD%AE-%E7%84%B6%E5%90%8E%E9%80%9A%E8%BF%87%E6%B3%A8%E5%85%A5%E7%9A%84%E6%96%B9%E5%BC%8F%E8%B5%8B%E5%80%BC%E7%BB%99%E5%AE%9E%E4%BD%93%E7%B1%BBJwtProperties-java-%E4%BB%A5%E4%BE%9B%E5%90%8E%E6%9C%9F%E4%BD%BF%E7%94%A8"><span class="toc-number">2.</span> <span class="toc-text">二 在application中先对jwt所需的参数进行设置, 然后通过注入的方式赋值给实体类JwtProperties.java, 以供后期使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89-%E5%88%9B%E5%BB%BAJwtTokenadminInterceptor%E6%8B%A6%E6%88%AA%E5%99%A8-%E9%9A%8F%E5%90%8E%E5%B0%86%E5%85%B6%E5%8A%A0%E5%85%A5%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6WebMvcConfiguration%E4%B8%AD-%E5%AE%83%E5%8F%AF%E4%BB%A5%E6%8B%A6%E6%88%AA%E6%8C%87%E5%AE%9A%E7%9A%84%E8%AF%B7%E6%B1%82%E5%A4%B4%E4%BB%8E%E4%B8%AD%E8%8E%B7%E5%8F%96%E5%88%B0token"><span class="toc-number">3.</span> <span class="toc-text">三 创建JwtTokenadminInterceptor拦截器, 随后将其加入配置文件WebMvcConfiguration中,它可以拦截指定的请求头从中获取到token</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9B-%E7%8E%B0%E5%9C%A8%E5%8F%AF%E4%BB%A5%E5%9C%A8%E7%99%BB%E5%BD%95%E7%9A%84%E6%96%B9%E6%B3%95%E4%B8%AD-%E9%85%8D%E7%BD%AE%E7%AC%AC%E4%B8%80%E6%AC%A1%E7%99%BB%E5%BD%95%E6%97%B6%E7%94%9F%E6%88%90jwt%E7%9A%84%E6%96%B9%E6%B3%95"><span class="toc-number">4.</span> <span class="toc-text">四 现在可以在登录的方法中,配置第一次登录时生成jwt的方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%B0%E6%AD%A4-jwt%E7%99%BB%E5%BD%95%E6%A3%80%E6%B5%8B%E5%AE%8C%E6%88%90-%E5%90%8E%E7%BB%AD%E6%A3%80%E6%9F%A5jwt%E4%B8%9A%E5%8A%A1%E7%94%B1%E9%85%8D%E7%BD%AE%E7%B1%BB%E6%96%87%E4%BB%B6%E6%8B%A6%E6%88%AA%E8%B7%AF%E5%BE%84%E5%90%8E-%E7%BB%8F%E8%BF%87JwtTokenadminInterceptor%E6%8B%A6%E6%88%AA%E5%99%A8%E6%A3%80%E9%AA%8C%E5%86%B3%E5%AE%9A%E6%98%AF%E5%90%A6%E6%94%BE%E8%A1%8C"><span class="toc-number">5.</span> <span class="toc-text">到此 jwt登录检测完成, 后续检查jwt业务由配置类文件拦截路径后, 经过JwtTokenadminInterceptor拦截器检验决定是否放行</span></a></li></ol></div></div></div></div></main><!--if (footerBg) if (footerBg === true)
+   - var footer_bg = bg_img
+ else
+   - var footer_bg = isImgOrUrl(theme.footer_bg) ? `background-image: url('${url_for(footerBg)}')` : `background: ${footerBg}`
+else
+  - var footer_bg = ''
+--><footer id="footer" style="background-color: transparent;"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2025 By Ren</div><div class="framework-info"><span>2023 </span><a target="_blank" rel="noopener" href="https://github.com/machsh64">Ren</a><span class="footer-separator">|</span><span> PASSIONE</span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"></div><script src="/ren/random.js"></script><script src="/js/essayjs.js"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener scroll 
+  window.tocScrollFn && window.removeEventListener('scroll', window.tocScrollFn)
+  window.scrollCollect && window.removeEventListener('scroll', scrollCollect)
+
+  document.getElementById('rightside').style.cssText = "opacity: ''; transform: ''"
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+  typeof disqusjs === 'object' && disqusjs.destroy()
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', (e) => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

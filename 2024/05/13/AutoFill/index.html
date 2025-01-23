@@ -1,0 +1,244 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"><title>Mybatis下的公共字段自动填充 | Ren |life</title><meta name="author" content="Ren"><meta name="copyright" content="Ren"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="在mybatis中使用切面反射自动给赋值">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Mybatis下的公共字段自动填充">
+<meta property="og:url" content="https://machsh64.github.io/2024/05/13/AutoFill/index.html">
+<meta property="og:site_name" content="Ren |life">
+<meta property="og:description" content="在mybatis中使用切面反射自动给赋值">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img2.imgtp.com/2024/05/13/kOGiLsdr.png">
+<meta property="article:published_time" content="2024-05-13T15:04:45.000Z">
+<meta property="article:modified_time" content="2024-05-17T15:33:18.000Z">
+<meta property="article:author" content="Ren">
+<meta property="article:tag" content="SpringBoot">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img2.imgtp.com/2024/05/13/kOGiLsdr.png"><link rel="shortcut icon" href="/img/favicon.ico"><link rel="canonical" href="https://machsh64.github.io/2024/05/13/AutoFill/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":null},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Mybatis下的公共字段自动填充',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: undefined,
+  isToc: true,
+  postUpdate: '2024-05-17 23:33:18'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = url => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      link.onload = () => resolve()
+      link.onerror = () => reject()
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/mycss.css"><link rel="stylesheet" href="/css/myhometop.css"><link rel="stylesheet" href="/css/essaycss.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/js-heo@1.0.11/bb/showbb_in_index.css"><script src="https://cdn.staticaly.com/gh/haonan15/CDN@main/source/waterfall.min.js"></script><!-- hexo injector head_end start --><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-double-row-display@1.00/cardlistpost.min.css"/>
+<style>#recent-posts > .recent-post-item >.recent-post-info > .article-meta-wrap > .tags:before {content:"\A";
+  white-space: pre;}#recent-posts > .recent-post-item >.recent-post-info > .article-meta-wrap > .tags > .article-meta__separator{display:none}</style>
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js/themes/blue/pace-theme-minimal.min.css"/><script src="https://cdn.jsdelivr.net/npm/pace-js/pace.min.js"></script><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/author.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">22</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">10</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">9</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/essay/"><span> Essay</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><span> About ME</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="Ren |life"><span class="site-name">Ren |life</span></a></span><div id="menus"></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/essay/"><span> Essay</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><span> About ME</span></a></div></div><div id="nav-right"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i></a></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">Mybatis下的公共字段自动填充</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-05-13T15:04:45.000Z" title="发表于 2024-05-13 23:04:45">2024-05-13</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-05-17T15:33:18.000Z" title="更新于 2024-05-17 23:33:18">2024-05-17</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/mybatis/">mybatis</a></span></div><div class="meta-secondline"></div></div></div><article class="post-content" id="article-container"><h2 id="&#x5728;-Mybatis-Plus&#x4E2D;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x5BF9;&#x5B9E;&#x4F53;&#x7C7B;&#x5C5E;&#x6027;&#x6DFB;&#x52A0;-TableField-fill-x3D-FieldFill-INSERT-&#x8FDB;&#x884C;&#x81EA;&#x52A8;&#x586B;&#x5145;-&#x4F46;&#x5728;mybatis&#x4E2D;&#x901A;&#x5E38;&#x9700;&#x8981;&#x81EA;&#x5B9A;&#x4E49;&#x6CE8;&#x89E3;-&#x7136;&#x540E;&#x901A;&#x8FC7;&#x5207;&#x9762;&#x62E6;&#x622A;&#x7528;&#x53CD;&#x5C04;&#x7684;&#x65B9;&#x5F0F;&#x8FDB;&#x884C;&#x8D4B;&#x503C;"><a href="#&#x5728;-Mybatis-Plus&#x4E2D;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x5BF9;&#x5B9E;&#x4F53;&#x7C7B;&#x5C5E;&#x6027;&#x6DFB;&#x52A0;-TableField-fill-x3D-FieldFill-INSERT-&#x8FDB;&#x884C;&#x81EA;&#x52A8;&#x586B;&#x5145;-&#x4F46;&#x5728;mybatis&#x4E2D;&#x901A;&#x5E38;&#x9700;&#x8981;&#x81EA;&#x5B9A;&#x4E49;&#x6CE8;&#x89E3;-&#x7136;&#x540E;&#x901A;&#x8FC7;&#x5207;&#x9762;&#x62E6;&#x622A;&#x7528;&#x53CD;&#x5C04;&#x7684;&#x65B9;&#x5F0F;&#x8FDB;&#x884C;&#x8D4B;&#x503C;" class="headerlink" title="&#x5728; Mybatis_Plus&#x4E2D;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x5BF9;&#x5B9E;&#x4F53;&#x7C7B;&#x5C5E;&#x6027;&#x6DFB;&#x52A0;@TableField(fill=FieldFill.INSERT)&#x8FDB;&#x884C;&#x81EA;&#x52A8;&#x586B;&#x5145;, &#x4F46;&#x5728;mybatis&#x4E2D;&#x901A;&#x5E38;&#x9700;&#x8981;&#x81EA;&#x5B9A;&#x4E49;&#x6CE8;&#x89E3;,&#x7136;&#x540E;&#x901A;&#x8FC7;&#x5207;&#x9762;&#x62E6;&#x622A;&#x7528;&#x53CD;&#x5C04;&#x7684;&#x65B9;&#x5F0F;&#x8FDB;&#x884C;&#x8D4B;&#x503C;"></a>&#x5728; Mybatis_Plus&#x4E2D;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x5BF9;&#x5B9E;&#x4F53;&#x7C7B;&#x5C5E;&#x6027;&#x6DFB;&#x52A0;@TableField(fill=FieldFill.INSERT)&#x8FDB;&#x884C;&#x81EA;&#x52A8;&#x586B;&#x5145;, &#x4F46;&#x5728;mybatis&#x4E2D;&#x901A;&#x5E38;&#x9700;&#x8981;&#x81EA;&#x5B9A;&#x4E49;&#x6CE8;&#x89E3;,&#x7136;&#x540E;&#x901A;&#x8FC7;&#x5207;&#x9762;&#x62E6;&#x622A;&#x7528;&#x53CD;&#x5C04;&#x7684;&#x65B9;&#x5F0F;&#x8FDB;&#x884C;&#x8D4B;&#x503C;</h2><img src="/2024/05/13/AutoFill/autofill.png" style="zoom:38%;">
+
+<h4 id="&#x7B2C;&#x4E00;&#x6B65;-&#x521B;&#x5EFA;&#x81EA;&#x5B9A;&#x4E49;&#x6CE8;&#x89E3;-AutoFill-&#x7528;&#x4E8E;&#x6807;&#x8BC6;&#x9700;&#x8981;&#x8FDB;&#x884C;&#x516C;&#x5171;&#x5B57;&#x6BB5;&#x81EA;&#x52A8;&#x586B;&#x5145;&#x7684;&#x65B9;&#x6CD5;"><a href="#&#x7B2C;&#x4E00;&#x6B65;-&#x521B;&#x5EFA;&#x81EA;&#x5B9A;&#x4E49;&#x6CE8;&#x89E3;-AutoFill-&#x7528;&#x4E8E;&#x6807;&#x8BC6;&#x9700;&#x8981;&#x8FDB;&#x884C;&#x516C;&#x5171;&#x5B57;&#x6BB5;&#x81EA;&#x52A8;&#x586B;&#x5145;&#x7684;&#x65B9;&#x6CD5;" class="headerlink" title="&#x7B2C;&#x4E00;&#x6B65;: &#x521B;&#x5EFA;&#x81EA;&#x5B9A;&#x4E49;&#x6CE8;&#x89E3; AutoFill, &#x7528;&#x4E8E;&#x6807;&#x8BC6;&#x9700;&#x8981;&#x8FDB;&#x884C;&#x516C;&#x5171;&#x5B57;&#x6BB5;&#x81EA;&#x52A8;&#x586B;&#x5145;&#x7684;&#x65B9;&#x6CD5;"></a>&#x7B2C;&#x4E00;&#x6B65;: &#x521B;&#x5EFA;&#x81EA;&#x5B9A;&#x4E49;&#x6CE8;&#x89E3; AutoFill, &#x7528;&#x4E8E;&#x6807;&#x8BC6;&#x9700;&#x8981;&#x8FDB;&#x884C;&#x516C;&#x5171;&#x5B57;&#x6BB5;&#x81EA;&#x52A8;&#x586B;&#x5145;&#x7684;&#x65B9;&#x6CD5;</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Target(ElementType.METHOD)</span></span><br><span class="line"><span class="meta">@Retention(RetentionPolicy.RUNTIME)</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> AutoFill {</span><br><span class="line">    <span class="comment">// &#x6570;&#x636E;&#x5E93;&#x64CD;&#x4F5C;&#x7C7B;&#x578B;: UPDATE  INSERT</span></span><br><span class="line">    OperationType <span class="title function_">value</span><span class="params">()</span>;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+
+<h4 id="&#x7B2C;&#x4E8C;&#x6B65;-&#x81EA;&#x5B9A;&#x4E49;&#x5207;&#x9762;&#x7C7B;-AutoFillAspect-&#x7EDF;&#x4E00;&#x62E6;&#x622A;&#x52A0;&#x5165;&#x4E86;-AutoFill&#x6CE8;&#x89E3;&#x7684;&#x65B9;&#x6CD5;-&#x901A;&#x8FC7;&#x53CD;&#x5C04;&#x4E3A;&#x516C;&#x5171;&#x5B57;&#x6BB5;&#x8D4B;&#x503C;"><a href="#&#x7B2C;&#x4E8C;&#x6B65;-&#x81EA;&#x5B9A;&#x4E49;&#x5207;&#x9762;&#x7C7B;-AutoFillAspect-&#x7EDF;&#x4E00;&#x62E6;&#x622A;&#x52A0;&#x5165;&#x4E86;-AutoFill&#x6CE8;&#x89E3;&#x7684;&#x65B9;&#x6CD5;-&#x901A;&#x8FC7;&#x53CD;&#x5C04;&#x4E3A;&#x516C;&#x5171;&#x5B57;&#x6BB5;&#x8D4B;&#x503C;" class="headerlink" title="&#x7B2C;&#x4E8C;&#x6B65;: &#x81EA;&#x5B9A;&#x4E49;&#x5207;&#x9762;&#x7C7B; AutoFillAspect, &#x7EDF;&#x4E00;&#x62E6;&#x622A;&#x52A0;&#x5165;&#x4E86; AutoFill&#x6CE8;&#x89E3;&#x7684;&#x65B9;&#x6CD5;, &#x901A;&#x8FC7;&#x53CD;&#x5C04;&#x4E3A;&#x516C;&#x5171;&#x5B57;&#x6BB5;&#x8D4B;&#x503C;"></a>&#x7B2C;&#x4E8C;&#x6B65;: &#x81EA;&#x5B9A;&#x4E49;&#x5207;&#x9762;&#x7C7B; AutoFillAspect, &#x7EDF;&#x4E00;&#x62E6;&#x622A;&#x52A0;&#x5165;&#x4E86; AutoFill&#x6CE8;&#x89E3;&#x7684;&#x65B9;&#x6CD5;, &#x901A;&#x8FC7;&#x53CD;&#x5C04;&#x4E3A;&#x516C;&#x5171;&#x5B57;&#x6BB5;&#x8D4B;&#x503C;</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Aspect</span></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="meta">@Slf4j</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">AutoFillAspect</span> {</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * &#x5207;&#x5165;&#x70B9; &#x8BBE;&#x7F6E;&#x62E6;&#x622A;&#x7684;&#x7C7B;&#x53CA;&#x65B9;&#x6CD5;&#x8DEF;&#x5F84;  &#x62E6;&#x622A;&#x7684;&#x6CE8;&#x89E3;</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Pointcut(&quot;execution(* com.work.mapper.*.*(..)) &amp;&amp; @annotation(com.work.annotation.AutoFill)&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">autoFillPointCut</span><span class="params">()</span> {}</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * &#x524D;&#x7F6E;&#x901A;&#x77E5;. &#x5728;&#x901A;&#x77E5;&#x4E2D;&#x8FDB;&#x884C;&#x516C;&#x5171;&#x5B57;&#x6BB5;&#x7684;&#x8D4B;&#x503C;</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Before(&quot;autoFillPointCut()&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">autoFill</span><span class="params">(JoinPoint joinPoint)</span> {</span><br><span class="line">        log.info(<span class="string">&quot;&#x5F00;&#x59CB;&#x8FDB;&#x884C;&#x516C;&#x5171;&#x5B57;&#x6BB5;&#x7684;&#x586B;&#x5145;&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// &#x83B7;&#x53D6;&#x5230;&#x5F53;&#x524D;&#x88AB;&#x62E6;&#x622A;&#x7684;&#x65B9;&#x6CD5;&#x4E0A;&#x7684;&#x6570;&#x636E;&#x5E93;&#x64CD;&#x4F5C;&#x7C7B;&#x578B;</span></span><br><span class="line">        <span class="type">MethodSignature</span> <span class="variable">signature</span> <span class="operator">=</span> (MethodSignature) joinPoint.getSignature();  <span class="comment">// &#x65B9;&#x6CD5;&#x7B7E;&#x540D;&#x5BF9;&#x8C61; &#x901A;&#x8FC7;&#x5411;&#x4E0B;&#x8F6C;&#x578B;</span></span><br><span class="line">        <span class="type">AutoFill</span> <span class="variable">autoFill</span> <span class="operator">=</span> signature.getMethod().getAnnotation(AutoFill.class);  <span class="comment">// &#x83B7;&#x5F97;&#x65B9;&#x6CD5;&#x7684;&#x6CE8;&#x89E3;&#x5BF9;&#x8C61;</span></span><br><span class="line">        <span class="type">OperationType</span> <span class="variable">operationType</span> <span class="operator">=</span> autoFill.value();  <span class="comment">// &#x83B7;&#x53D6;&#x6570;&#x636E;&#x5E93;&#x64CD;&#x4F5C;&#x7C7B;&#x578B;  INSERT  UPDATE</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">//&#x83B7;&#x53D6;&#x5230;&#x5F53;&#x524D;&#x88AB;&#x62E6;&#x622A;&#x7684;&#x65B9;&#x6CD5;&#x7684;&#x53C2;&#x6570;-&#x5B9E;&#x4F53;&#x5BF9;&#x8C61;</span></span><br><span class="line">        Object[] args = joinPoint.getArgs();</span><br><span class="line">        <span class="keyword">if</span> (args == <span class="literal">null</span> || args.length == <span class="number">0</span>){</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        }</span><br><span class="line">        <span class="type">Object</span> <span class="variable">entity</span> <span class="operator">=</span> args[<span class="number">0</span>];</span><br><span class="line"></span><br><span class="line">        <span class="comment">//&#x51C6;&#x5907;&#x8D4B;&#x503C;&#x7684;&#x6570;&#x636E;</span></span><br><span class="line">        <span class="type">LocalDateTime</span> <span class="variable">now</span> <span class="operator">=</span> LocalDateTime.now();</span><br><span class="line">        <span class="type">Long</span> <span class="variable">currentId</span> <span class="operator">=</span> BaseContext.getCurrentId();</span><br><span class="line"></span><br><span class="line">        <span class="comment">//&#x8FC7;&#x5462;&#x636E;&#x5F53;&#x524D;&#x4E0D;&#x540C;&#x7684;&#x64CD;&#x4F5C;&#x7C7B;&#x578B;,&#x4E3A;&#x5BF9;&#x5E94;&#x7684;&#x5C5E;&#x6027;&#x901A;&#x8FC7;&#x53CD;&#x5C04;&#x6765;&#x8D4B;&#x503C;</span></span><br><span class="line">        <span class="keyword">if</span> (operationType == OperationType.INSERT){</span><br><span class="line">            <span class="keyword">try</span> {</span><br><span class="line">                <span class="comment">// &#x4E3A;4&#x4E2A;&#x516C;&#x5171;&#x5B57;&#x6BB5;&#x8D4B;&#x503C;</span></span><br><span class="line">                <span class="comment">// &#x7528;&#x53CD;&#x5C04;&#x8FDB;&#x884C;&#x8D4B;&#x503C;</span></span><br><span class="line">                entity.getClass().getDeclaredMethod(<span class="string">&quot;setCreateTime&quot;</span>, LocalDateTime.class).invoke(entity, now);</span><br><span class="line">                entity.getClass().getDeclaredMethod(<span class="string">&quot;setCreateUser&quot;</span>, Long.class).invoke(entity,currentId);</span><br><span class="line">                entity.getClass().getDeclaredMethod(<span class="string">&quot;setUpdateTime&quot;</span>, LocalDateTime.class).invoke(entity, now);</span><br><span class="line">                entity.getClass().getDeclaredMethod(<span class="string">&quot;setUpdateUser&quot;</span>, Long.class).invoke(entity,currentId);</span><br><span class="line">            } <span class="keyword">catch</span> (IllegalAccessException e) {</span><br><span class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">RuntimeException</span>(e);</span><br><span class="line">            } <span class="keyword">catch</span> (InvocationTargetException e) {</span><br><span class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">RuntimeException</span>(e);</span><br><span class="line">            } <span class="keyword">catch</span> (NoSuchMethodException e) {</span><br><span class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">RuntimeException</span>(e);</span><br><span class="line">            }</span><br><span class="line"></span><br><span class="line">        }<span class="keyword">else</span> <span class="keyword">if</span>(operationType == OperationType.UPDATE){</span><br><span class="line">            <span class="keyword">try</span> {</span><br><span class="line">                <span class="comment">// &#x4E3A;2&#x4E2A;&#x516C;&#x5171;&#x5B57;&#x6BB5;&#x8D4B;&#x503C;</span></span><br><span class="line">                <span class="comment">// &#x4F7F;&#x7528;&#x53CD;&#x5C04;&#x8FDB;&#x884C;&#x8D4B;&#x503C;</span></span><br><span class="line">                entity.getClass().getDeclaredMethod(<span class="string">&quot;setUpdateTime&quot;</span>, LocalDateTime.class).invoke(entity, now);</span><br><span class="line">                entity.getClass().getDeclaredMethod(<span class="string">&quot;setUpdateUser&quot;</span>, Long.class).invoke(entity,currentId);</span><br><span class="line">            } <span class="keyword">catch</span> (IllegalAccessException e) {</span><br><span class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">RuntimeException</span>(e);</span><br><span class="line">            } <span class="keyword">catch</span> (InvocationTargetException e) {</span><br><span class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">RuntimeException</span>(e);</span><br><span class="line">            } <span class="keyword">catch</span> (NoSuchMethodException e) {</span><br><span class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">RuntimeException</span>(e);</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+
+<h4 id="&#x7B2C;&#x4E09;&#x6B65;-&#x5728;-Mapper&#x5BF9;&#x5E94;&#x7684;&#x65B9;&#x6CD5;&#x4E0A;&#x52A0;&#x5165;-AutoFill&#x6CE8;&#x89E3;"><a href="#&#x7B2C;&#x4E09;&#x6B65;-&#x5728;-Mapper&#x5BF9;&#x5E94;&#x7684;&#x65B9;&#x6CD5;&#x4E0A;&#x52A0;&#x5165;-AutoFill&#x6CE8;&#x89E3;" class="headerlink" title="&#x7B2C;&#x4E09;&#x6B65;: &#x5728; Mapper&#x5BF9;&#x5E94;&#x7684;&#x65B9;&#x6CD5;&#x4E0A;&#x52A0;&#x5165; AutoFill&#x6CE8;&#x89E3;"></a>&#x7B2C;&#x4E09;&#x6B65;: &#x5728; Mapper&#x5BF9;&#x5E94;&#x7684;&#x65B9;&#x6CD5;&#x4E0A;&#x52A0;&#x5165; AutoFill&#x6CE8;&#x89E3;</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@AutoFill(OperationType.UPDATE)</span></span><br><span class="line"><span class="keyword">void</span> <span class="title function_">update</span><span class="params">(Employee employee)</span>;</span><br></pre></td></tr></table></figure>
+
+<h4 id="&#x5230;&#x6B64;&#x4E3A;&#x6B62;&#x516C;&#x5171;&#x5B57;&#x6BB5;&#x81EA;&#x52A8;&#x586B;&#x5145;&#x5B8C;&#x6210;"><a href="#&#x5230;&#x6B64;&#x4E3A;&#x6B62;&#x516C;&#x5171;&#x5B57;&#x6BB5;&#x81EA;&#x52A8;&#x586B;&#x5145;&#x5B8C;&#x6210;" class="headerlink" title="&#x5230;&#x6B64;&#x4E3A;&#x6B62;&#x516C;&#x5171;&#x5B57;&#x6BB5;&#x81EA;&#x52A8;&#x586B;&#x5145;&#x5B8C;&#x6210;"></a>&#x5230;&#x6B64;&#x4E3A;&#x6B62;&#x516C;&#x5171;&#x5B57;&#x6BB5;&#x81EA;&#x52A8;&#x586B;&#x5145;&#x5B8C;&#x6210;</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="meta">@ConfigurationProperties(prefix = &quot;sky.jwt&quot;)</span></span><br><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">JwtProperties</span> {</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * &#x7BA1;&#x7406;&#x7AEF;&#x5458;&#x5DE5;&#x751F;&#x6210;jwt&#x4EE4;&#x724C;&#x76F8;&#x5173;&#x914D;&#x7F6E;</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> String adminSecretKey;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">long</span> adminTtl;</span><br><span class="line">    <span class="keyword">private</span> String adminTokenName;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * &#x7528;&#x6237;&#x7AEF;&#x5FAE;&#x4FE1;&#x7528;&#x6237;&#x751F;&#x6210;jwt&#x4EE4;&#x724C;&#x76F8;&#x5173;&#x914D;&#x7F6E;</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> String userSecretKey;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">long</span> userTtl;</span><br><span class="line">    <span class="keyword">private</span> String userTokenName;</span><br><span class="line"></span><br><span class="line">}</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+</article><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/SpringBoot/">SpringBoot</a></div><div class="post_share"></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2024/05/18/jwt/" title="使用jwt进行用户登录验证"><img class="cover" src="https://img2.imgtp.com/2024/05/18/xoy9otbe.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">使用jwt进行用户登录验证</div></div></a></div><div class="next-post pull-right"><a href="/2024/05/11/swagger-with-knife4j/" title="Swagger之使用knife4j"><img class="cover" src="https://tse3-mm.cn.bing.net/th/id/OIP-C.fTN8mWwhZUVfDxlBYrZK4wHaD7?rs=1&amp;pid=ImgDetMain" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Swagger之使用knife4j</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9C%A8-Mybatis-Plus%E4%B8%AD%E5%8F%AF%E4%BB%A5%E9%80%9A%E8%BF%87%E5%AF%B9%E5%AE%9E%E4%BD%93%E7%B1%BB%E5%B1%9E%E6%80%A7%E6%B7%BB%E5%8A%A0-TableField-fill-x3D-FieldFill-INSERT-%E8%BF%9B%E8%A1%8C%E8%87%AA%E5%8A%A8%E5%A1%AB%E5%85%85-%E4%BD%86%E5%9C%A8mybatis%E4%B8%AD%E9%80%9A%E5%B8%B8%E9%9C%80%E8%A6%81%E8%87%AA%E5%AE%9A%E4%B9%89%E6%B3%A8%E8%A7%A3-%E7%84%B6%E5%90%8E%E9%80%9A%E8%BF%87%E5%88%87%E9%9D%A2%E6%8B%A6%E6%88%AA%E7%94%A8%E5%8F%8D%E5%B0%84%E7%9A%84%E6%96%B9%E5%BC%8F%E8%BF%9B%E8%A1%8C%E8%B5%8B%E5%80%BC"><span class="toc-number">1.</span> <span class="toc-text">在 Mybatis_Plus中可以通过对实体类属性添加@TableField(fill&#x3D;FieldFill.INSERT)进行自动填充, 但在mybatis中通常需要自定义注解,然后通过切面拦截用反射的方式进行赋值</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E6%AD%A5-%E5%88%9B%E5%BB%BA%E8%87%AA%E5%AE%9A%E4%B9%89%E6%B3%A8%E8%A7%A3-AutoFill-%E7%94%A8%E4%BA%8E%E6%A0%87%E8%AF%86%E9%9C%80%E8%A6%81%E8%BF%9B%E8%A1%8C%E5%85%AC%E5%85%B1%E5%AD%97%E6%AE%B5%E8%87%AA%E5%8A%A8%E5%A1%AB%E5%85%85%E7%9A%84%E6%96%B9%E6%B3%95"><span class="toc-number">1.0.1.</span> <span class="toc-text">第一步: 创建自定义注解 AutoFill, 用于标识需要进行公共字段自动填充的方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E6%AD%A5-%E8%87%AA%E5%AE%9A%E4%B9%89%E5%88%87%E9%9D%A2%E7%B1%BB-AutoFillAspect-%E7%BB%9F%E4%B8%80%E6%8B%A6%E6%88%AA%E5%8A%A0%E5%85%A5%E4%BA%86-AutoFill%E6%B3%A8%E8%A7%A3%E7%9A%84%E6%96%B9%E6%B3%95-%E9%80%9A%E8%BF%87%E5%8F%8D%E5%B0%84%E4%B8%BA%E5%85%AC%E5%85%B1%E5%AD%97%E6%AE%B5%E8%B5%8B%E5%80%BC"><span class="toc-number">1.0.2.</span> <span class="toc-text">第二步: 自定义切面类 AutoFillAspect, 统一拦截加入了 AutoFill注解的方法, 通过反射为公共字段赋值</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E6%AD%A5-%E5%9C%A8-Mapper%E5%AF%B9%E5%BA%94%E7%9A%84%E6%96%B9%E6%B3%95%E4%B8%8A%E5%8A%A0%E5%85%A5-AutoFill%E6%B3%A8%E8%A7%A3"><span class="toc-number">1.0.3.</span> <span class="toc-text">第三步: 在 Mapper对应的方法上加入 AutoFill注解</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%B0%E6%AD%A4%E4%B8%BA%E6%AD%A2%E5%85%AC%E5%85%B1%E5%AD%97%E6%AE%B5%E8%87%AA%E5%8A%A8%E5%A1%AB%E5%85%85%E5%AE%8C%E6%88%90"><span class="toc-number">1.0.4.</span> <span class="toc-text">到此为止公共字段自动填充完成</span></a></li></ol></li></ol></li></ol></div></div></div></div></main><!--if (footerBg) if (footerBg === true)
+   - var footer_bg = bg_img
+ else
+   - var footer_bg = isImgOrUrl(theme.footer_bg) ? `background-image: url('${url_for(footerBg)}')` : `background: ${footerBg}`
+else
+  - var footer_bg = ''
+--><footer id="footer" style="background-color: transparent;"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2025 By Ren</div><div class="framework-info"><span>2023 </span><a target="_blank" rel="noopener" href="https://github.com/machsh64">Ren</a><span class="footer-separator">|</span><span> PASSIONE</span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"></div><script src="/ren/random.js"></script><script src="/js/essayjs.js"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener scroll 
+  window.tocScrollFn && window.removeEventListener('scroll', window.tocScrollFn)
+  window.scrollCollect && window.removeEventListener('scroll', scrollCollect)
+
+  document.getElementById('rightside').style.cssText = "opacity: ''; transform: ''"
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+  typeof disqusjs === 'object' && disqusjs.destroy()
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', (e) => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
