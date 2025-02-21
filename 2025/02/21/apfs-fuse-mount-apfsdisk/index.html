@@ -1,0 +1,262 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"><title>apfs-fuse mount apfsdisk | Ren |life</title><meta name="author" content="Ren"><meta name="copyright" content="Ren"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="记录一次我在ubuntu挂载apfs的操作">
+<meta property="og:type" content="article">
+<meta property="og:title" content="apfs-fuse mount apfsdisk">
+<meta property="og:url" content="https://machsh64.github.io/2025/02/21/apfs-fuse-mount-apfsdisk/index.html">
+<meta property="og:site_name" content="Ren |life">
+<meta property="og:description" content="记录一次我在ubuntu挂载apfs的操作">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://eshop.macsales.com/blog/wp-content/uploads/2018/12/apfs-2-e1545252186458.jpg">
+<meta property="article:published_time" content="2025-02-21T13:46:31.000Z">
+<meta property="article:modified_time" content="2025-02-21T15:02:14.571Z">
+<meta property="article:author" content="Ren">
+<meta property="article:tag" content="开发记录">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://eshop.macsales.com/blog/wp-content/uploads/2018/12/apfs-2-e1545252186458.jpg"><link rel="shortcut icon" href="/img/favicon.ico"><link rel="canonical" href="https://machsh64.github.io/2025/02/21/apfs-fuse-mount-apfsdisk/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":null},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'apfs-fuse mount apfsdisk',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: undefined,
+  isToc: true,
+  postUpdate: '2025-02-21 23:02:14'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = url => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      link.onload = () => resolve()
+      link.onerror = () => reject()
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/mycss.css"><link rel="stylesheet" href="/css/myhometop.css"><link rel="stylesheet" href="/css/essaycss.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/js-heo@1.0.11/bb/showbb_in_index.css"><script src="https://cdn.staticaly.com/gh/haonan15/CDN@main/source/waterfall.min.js"></script><!-- hexo injector head_end start --><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-double-row-display@1.00/cardlistpost.min.css"/>
+<style>#recent-posts > .recent-post-item >.recent-post-info > .article-meta-wrap > .tags:before {content:"\A";
+  white-space: pre;}#recent-posts > .recent-post-item >.recent-post-info > .article-meta-wrap > .tags > .article-meta__separator{display:none}</style>
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js/themes/blue/pace-theme-minimal.min.css"/><script src="https://cdn.jsdelivr.net/npm/pace-js/pace.min.js"></script><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/author.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">24</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">11</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">10</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/essay/"><span> Essay</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><span> About ME</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="Ren |life"><span class="site-name">Ren |life</span></a></span><div id="menus"></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/essay/"><span> Essay</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><span> About ME</span></a></div></div><div id="nav-right"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i></a></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">apfs-fuse mount apfsdisk</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-02-21T13:46:31.000Z" title="发表于 2025-02-21 21:46:31">2025-02-21</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-02-21T15:02:14.571Z" title="更新于 2025-02-21 23:02:14">2025-02-21</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/tips/">tips</a></span></div><div class="meta-secondline"></div></div></div><article class="post-content" id="article-container"><h1 id="&#x5728;Ubuntu&#x6302;&#x8F7D;apfs&#x6587;&#x4EF6;&#x7CFB;&#x7EDF;&#x7684;&#x786C;&#x76D8;"><a href="#&#x5728;Ubuntu&#x6302;&#x8F7D;apfs&#x6587;&#x4EF6;&#x7CFB;&#x7EDF;&#x7684;&#x786C;&#x76D8;" class="headerlink" title="&#x5728;Ubuntu&#x6302;&#x8F7D;apfs&#x6587;&#x4EF6;&#x7CFB;&#x7EDF;&#x7684;&#x786C;&#x76D8;"></a>&#x5728;Ubuntu&#x6302;&#x8F7D;apfs&#x6587;&#x4EF6;&#x7CFB;&#x7EDF;&#x7684;&#x786C;&#x76D8;</h1><p>&#x5728;&#x6211;&#x5C06;mac&#x7684;&#x4EE3;&#x7801;&#x786C;&#x76D8;&#x8FC1;&#x79FB;&#x5230;&#x670D;&#x52A1;&#x5668;&#x65F6;&#xFF0C;&#x53D1;&#x73B0;ubuntu&#x4E0D;&#x652F;&#x6301;apfs&#x683C;&#x5F0F;&#x7684;&#x786C;&#x76D8;&#xFF0C;&#x4E8E;&#x662F;&#x5728;&#x641C;&#x7D22;&#x4E2D;&#x5F97;&#x77E5;apfs-fuse&#x7684;&#x5E94;&#x7528;&#x53EF;&#x4EE5;&#x89E3;&#x51B3;&#xFF0C;&#x4F46;&#x8FC7;&#x7A0B;&#x8E29;&#x5751;&#x8F83;&#x591A;&#xFF0C;&#x76F8;&#x5173;&#x6587;&#x7AE0;&#x4E5F;&#x5C11;&#xFF0C;&#x5728;&#x6B64;&#x8BB0;&#x5F55;&#x4EE5;&#x5907;&#x540E;&#x7528;</p>
+<h2 id="1-&#x9996;&#x5148;&#x5B89;&#x88C5;&#x9700;&#x8981;&#x7684;&#x6587;&#x4EF6;"><a href="#1-&#x9996;&#x5148;&#x5B89;&#x88C5;&#x9700;&#x8981;&#x7684;&#x6587;&#x4EF6;" class="headerlink" title="1 &#x9996;&#x5148;&#x5B89;&#x88C5;&#x9700;&#x8981;&#x7684;&#x6587;&#x4EF6;"></a>1 &#x9996;&#x5148;&#x5B89;&#x88C5;&#x9700;&#x8981;&#x7684;&#x6587;&#x4EF6;</h2><p>&#x8BF7;&#x786E;&#x4FDD;&#x6307;&#x4EE4;&#x5E93;&#x4E2D;&#x5305;&#x542B;main&#x6216;universe&#x4ED3;&#x5E93;&#xFF0C;&#x9632;&#x6B62;&#x6587;&#x4EF6;&#x7F3A;&#x5931;</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo apt update</span><br><span class="line">sudo apt upgrade</span><br><span class="line"></span><br><span class="line">sudo apt install build-essential git cmake libfuse-dev libattr1-dev</span><br></pre></td></tr></table></figure>
+<h2 id="2-&#x4E0B;&#x8F7D;apfs-fuse-&#x5E76;&#x521D;&#x59CB;&#x5316;"><a href="#2-&#x4E0B;&#x8F7D;apfs-fuse-&#x5E76;&#x521D;&#x59CB;&#x5316;" class="headerlink" title="2 &#x4E0B;&#x8F7D;apfs-fuse, &#x5E76;&#x521D;&#x59CB;&#x5316;"></a>2 &#x4E0B;&#x8F7D;apfs-fuse, &#x5E76;&#x521D;&#x59CB;&#x5316;</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> git@github.com:sgan81/apfs-fuse.git</span><br><span class="line"></span><br><span class="line"><span class="comment"># &#x8FDB;&#x5165;&#x514B;&#x9686;&#x7684;&#x76EE;&#x5F55;</span></span><br><span class="line"><span class="built_in">cd</span> apfs-fuse</span><br><span class="line"></span><br><span class="line"><span class="comment"># &#x7F16;&#x8BD1;&#x548C;&#x5B89;&#x88C5;</span></span><br><span class="line"><span class="built_in">mkdir</span> build</span><br><span class="line"><span class="built_in">cd</span> build</span><br><span class="line">cmake ..</span><br><span class="line">make</span><br><span class="line">sudo make install</span><br></pre></td></tr></table></figure>
+
+<p>cmake&#x53EF;&#x80FD;&#x51FA;&#x73B0;&#x7684;&#x9519;&#x8BEF;</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># &#x7F3A;&#x5931; 3rdparty/lzfse/src/lzfse.h</span></span><br><span class="line">CMake Error: Cannot determine <span class="built_in">link</span> language <span class="keyword">for</span> target <span class="string">&quot;lzfse&quot;</span>.</span><br><span class="line">CMake Error: CMake can not determine linker language <span class="keyword">for</span> target: lzfse</span><br></pre></td></tr></table></figure>
+<p>&#x89E3;&#x51B3;</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># &#x8FD4;&#x56DE;apfs-fuse&#x6839;&#x76EE;&#x5F55;</span></span><br><span class="line"><span class="built_in">cd</span>  /apfs-fuse</span><br><span class="line">git submodule init</span><br><span class="line">git submodule update</span><br><span class="line"></span><br><span class="line"><span class="comment"># &#x91CD;&#x65B0;&#x7F16;&#x8BD1;cmake</span></span><br><span class="line"><span class="built_in">cd</span> build</span><br><span class="line">cmake ..</span><br><span class="line"><span class="comment"># &#x5982;&#x679C;&#x7F16;&#x8BD1;&#x6210;&#x529F; &#x7EE7;&#x7EED;&#x5B8C;&#x6210;&#x7F16;&#x8BD1;&#x4E0E;&#x5B89;&#x88C5;</span></span><br><span class="line">make</span><br><span class="line">sudo make install</span><br><span class="line"><span class="comment">#</span></span><br></pre></td></tr></table></figure>
+
+<p>make&#x53EF;&#x80FD;&#x51FA;&#x73B0;&#x7684;&#x95EE;&#x9898; 1</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># &#x7F3A;&#x5C11; bzlib.h &#x5934;&#x6587;&#x4EF6;&#xFF0C;bzlib.h &#x662F; bzip2 &#x538B;&#x7F29;&#x5E93;&#x7684;&#x5934;&#x6587;&#x4EF6;&#xFF0C;apfs-fuse &#x9879;&#x76EE;&#x4F9D;&#x8D56;&#x8FD9;&#x4E2A;&#x5E93;&#x6765;&#x5B8C;&#x6210;&#x67D0;&#x4E9B;&#x529F;&#x80FD;&#x3002;</span></span><br><span class="line">CMakeFiles/apfs.dir/build.make:566: recipe <span class="keyword">for</span> target <span class="string">&apos;CMakeFiles/apfs.dir/ApfsLib/Util.cpp.o&apos;</span> failed</span><br><span class="line">make[2]: *** [CMakeFiles/apfs.dir/ApfsLib/Util.cpp.o] Error 1</span><br><span class="line">CMakeFiles/Makefile2:181: recipe <span class="keyword">for</span> target <span class="string">&apos;CMakeFiles/apfs.dir/all&apos;</span> failed</span><br><span class="line">make[1]: *** [CMakeFiles/apfs.dir/all] Error 2</span><br><span class="line">Makefile:129: recipe <span class="keyword">for</span> target <span class="string">&apos;all&apos;</span> failed</span><br><span class="line">make: *** [all] Error 2</span><br></pre></td></tr></table></figure>
+<p>&#x89E3;&#x51B3;</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># &#x5B89;&#x88C5;&#x6B64;&#x5F00;&#x53D1;&#x5305;</span></span><br><span class="line">sudo apt install libbz2-dev</span><br><span class="line"></span><br><span class="line"><span class="comment"># &#x91CD;&#x65B0;&#x7F16;&#x8BD1;</span></span><br><span class="line"><span class="built_in">cd</span> /apfs-fuse/build</span><br><span class="line">make</span><br><span class="line"></span><br><span class="line"><span class="comment"># &#x5982;&#x679C;&#x6210;&#x529F;</span></span><br><span class="line">sudo make install</span><br></pre></td></tr></table></figure>
+
+<p>make&#x53EF;&#x80FD;&#x51FA;&#x73B0;&#x7684;&#x95EE;&#x9898; 2</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># &#x7F3A;&#x5C11; fuse3 &#x7684;&#x5F00;&#x53D1;&#x5305;&#x3002;apfs-fuse &#x9700;&#x8981; fuse3 &#x5E93;&#x6765;&#x652F;&#x6301;&#x6587;&#x4EF6;&#x7CFB;&#x7EDF;&#x6302;&#x8F7D;</span></span><br><span class="line">CMakeFiles/apfs-fuse.dir/build.make:62: recipe <span class="keyword">for</span> target <span class="string">&apos;CMakeFiles/apfs-fuse.dir/apfsfuse/ApfsFuse.cpp.o&apos;</span> failed</span><br><span class="line">make[2]: *** [CMakeFiles/apfs-fuse.dir/apfsfuse/ApfsFuse.cpp.o] Error 1</span><br><span class="line">CMakeFiles/Makefile2:259: recipe <span class="keyword">for</span> target <span class="string">&apos;CMakeFiles/apfs-fuse.dir/all&apos;</span> failed</span><br><span class="line">make[1]: *** [CMakeFiles/apfs-fuse.dir/all] Error 2</span><br><span class="line">Makefile:129: recipe <span class="keyword">for</span> target <span class="string">&apos;all&apos;</span> failed</span><br><span class="line">make: *** [all] Error 2</span><br></pre></td></tr></table></figure>
+<p>&#x89E3;&#x51B3;</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># &#x5B89;&#x88C5;fuse3&#x7684;&#x5F00;&#x53D1;&#x5305;</span></span><br><span class="line">sudo apt install libfuse3-dev</span><br><span class="line"></span><br><span class="line"><span class="comment"># &#x91CD;&#x65B0;&#x7F16;&#x8BD1;</span></span><br><span class="line"><span class="built_in">cd</span> /apfs-fuse/build </span><br><span class="line">make </span><br><span class="line"></span><br><span class="line"><span class="comment"># &#x5982;&#x679C;&#x6210;&#x529F;</span></span><br><span class="line">sudo make install</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-&#x6302;&#x8F7D;apfs&#x683C;&#x5F0F;&#x7684;&#x786C;&#x76D8;"><a href="#3-&#x6302;&#x8F7D;apfs&#x683C;&#x5F0F;&#x7684;&#x786C;&#x76D8;" class="headerlink" title="3 &#x6302;&#x8F7D;apfs&#x683C;&#x5F0F;&#x7684;&#x786C;&#x76D8;"></a>3 &#x6302;&#x8F7D;apfs&#x683C;&#x5F0F;&#x7684;&#x786C;&#x76D8;</h2><p>&#x626B;&#x63CF;&#x51FA;&#x76D8;&#x7B26;</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">fdisk -l &#x6216; lsblk</span><br><span class="line"></span><br><span class="line">&#x5982;</span><br><span class="line">Disk /dev/sdb&#xFF1A;465.8 GiB&#xFF0C;500107862016 &#x5B57;&#x8282;&#xFF0C;976773168 &#x4E2A;&#x6247;&#x533A;</span><br><span class="line">&#x5355;&#x5143;&#xFF1A;&#x6247;&#x533A; / 1 * 512 = 512 &#x5B57;&#x8282;</span><br><span class="line">&#x6247;&#x533A;&#x5927;&#x5C0F;(&#x903B;&#x8F91;/&#x7269;&#x7406;)&#xFF1A;512 &#x5B57;&#x8282; / 4096 &#x5B57;&#x8282;</span><br><span class="line">I/O &#x5927;&#x5C0F;(&#x6700;&#x5C0F;/&#x6700;&#x4F73;)&#xFF1A;4096 &#x5B57;&#x8282; / 4096 &#x5B57;&#x8282;</span><br><span class="line">&#x78C1;&#x76D8;&#x6807;&#x7B7E;&#x7C7B;&#x578B;&#xFF1A;gpt</span><br><span class="line">&#x78C1;&#x76D8;&#x6807;&#x8BC6;&#x7B26;&#xFF1A;956A8929-D89C-4268-BE1D-F2FB36B1F32A</span><br><span class="line"></span><br><span class="line">&#x8BBE;&#x5907;        &#x8D77;&#x70B9;      &#x672B;&#x5C3E;      &#x6247;&#x533A;   &#x5927;&#x5C0F; &#x7C7B;&#x578B;</span><br><span class="line">/dev/sdb1     34     32767     32734    16M Microsoft &#x4FDD;&#x7559;</span><br><span class="line">/dev/sdb2  32768 976773127 976740360 465.8G &#x672A;&#x77E5;</span><br><span class="line"></span><br><span class="line">&#x6216;</span><br><span class="line">sdb      8:16   0 465.8G  0 disk </span><br><span class="line">&#x251C;&#x2500;sdb1   8:17   0    16M  0 part </span><br><span class="line">&#x2514;&#x2500;sdb2   8:18   0 465.8G  0 part </span><br></pre></td></tr></table></figure>
+<p>&#x5219; dev/sdb &#x4E3A;&#x8BE5;&#x786C;&#x76D8;&#x4F4D; &#x53EF;&#x4EE5;&#x770B;&#x5230; dev/sdb2 </p>
+<p>&#x5982;&#x679C;&#x76F4;&#x63A5;&#x6302;&#x8F7D;</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo apfs-fuse /dev/sdb2 ~/RenCCCP</span><br><span class="line"></span><br><span class="line"><span class="comment"># &#x53EF;&#x80FD;&#x62A5;&#x9519;</span></span><br><span class="line">Unable to get volume!</span><br></pre></td></tr></table></figure>
+<p>&#x9700;&#x8981;&#x6307;&#x5B9A;vol&#x53C2;&#x6570;&#x540E;&#x518D;&#x6302;&#x8F7D;</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">apfs-fuse -o vol=1 /dev/sdb2 ~/RenCCCP</span><br><span class="line"><span class="built_in">cd</span> ~/RenCCCP/</span><br><span class="line"><span class="built_in">ls</span></span><br><span class="line">private-dir  root</span><br></pre></td></tr></table></figure>
+<p>&#x5219;&#x6B64;&#x65F6;&#x6302;&#x8F7D;&#x6210;&#x529F;</p>
+</article><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%BC%80%E5%8F%91%E8%AE%B0%E5%BD%95/">开发记录</a></div><div class="post_share"></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2025/01/24/elasticSearch/" title="ES 的快速搭建"><img class="cover" src="http://blog.hubwiz.com/2016/11/23/Elasticsearch/Elasticsearch.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">ES 的快速搭建</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9C%A8Ubuntu%E6%8C%82%E8%BD%BDapfs%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E7%9A%84%E7%A1%AC%E7%9B%98"><span class="toc-number">1.</span> <span class="toc-text">在Ubuntu挂载apfs文件系统的硬盘</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E9%A6%96%E5%85%88%E5%AE%89%E8%A3%85%E9%9C%80%E8%A6%81%E7%9A%84%E6%96%87%E4%BB%B6"><span class="toc-number">1.1.</span> <span class="toc-text">1 首先安装需要的文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E4%B8%8B%E8%BD%BDapfs-fuse-%E5%B9%B6%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-number">1.2.</span> <span class="toc-text">2 下载apfs-fuse, 并初始化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E6%8C%82%E8%BD%BDapfs%E6%A0%BC%E5%BC%8F%E7%9A%84%E7%A1%AC%E7%9B%98"><span class="toc-number">1.3.</span> <span class="toc-text">3 挂载apfs格式的硬盘</span></a></li></ol></li></ol></div></div></div></div></main><!--if (footerBg) if (footerBg === true)
+   - var footer_bg = bg_img
+ else
+   - var footer_bg = isImgOrUrl(theme.footer_bg) ? `background-image: url('${url_for(footerBg)}')` : `background: ${footerBg}`
+else
+  - var footer_bg = ''
+--><footer id="footer" style="background-color: transparent;"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2025 By Ren</div><div class="framework-info"><span>2023 </span><a target="_blank" rel="noopener" href="https://github.com/machsh64">Ren</a><span class="footer-separator">|</span><span> PASSIONE</span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"></div><script src="/ren/random.js"></script><script src="/js/essayjs.js"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener scroll 
+  window.tocScrollFn && window.removeEventListener('scroll', window.tocScrollFn)
+  window.scrollCollect && window.removeEventListener('scroll', scrollCollect)
+
+  document.getElementById('rightside').style.cssText = "opacity: ''; transform: ''"
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+  typeof disqusjs === 'object' && disqusjs.destroy()
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', (e) => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
